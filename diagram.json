@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "author": "Mohamad Abdur Rahman Wahid",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-breadboard-half",
+      "id": "bb2",
+      "top": -3,
+      "left": 137.2,
+      "attrs": { "color": "#eeefed" }
+    },
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": -4.9, "left": -33.8, "attrs": {} },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "ultrasonic2",
+      "top": 20.7,
+      "left": 111.1,
+      "attrs": { "distance": "2" }
+    },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "ultrasonic3",
+      "top": 20.7,
+      "left": 331.9,
+      "attrs": { "distance": "163" }
+    },
+    {
+      "type": "wokwi-lcd1602",
+      "id": "lcd1",
+      "top": 217.6,
+      "left": 149.6,
+      "attrs": { "pins": "i2c" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "esp:3V3", "bb2:bp.1", "red", [ "h9.3", "v29.7" ] ],
+    [ "esp:GND.1", "bb2:bn.1", "black", [ "h18.9", "v47.9", "h84.8" ] ],
+    [ "bb2:5b.j", "esp:D2", "orange", [ "v19.2", "h-96", "v-47.3" ] ],
+    [ "bb2:4b.j", "esp:D15", "#8f4814", [ "v9.6", "h-96", "v-28.6" ] ],
+    [ "bb2:4b.i", "ultrasonic2:TRIG", "#8f4814", [ "v0" ] ],
+    [ "bb2:5b.i", "ultrasonic2:ECHO", "orange", [ "v0" ] ],
+    [ "bb2:bp.2", "ultrasonic2:VCC", "red", [ "v0" ] ],
+    [ "bb2:bn.5", "ultrasonic2:GND", "black", [ "v0" ] ],
+    [ "bb2:bp.21", "ultrasonic3:VCC", "red", [ "v0" ] ],
+    [ "bb2:bn.24", "ultrasonic3:GND", "black", [ "v0" ] ],
+    [ "esp:D5", "bb2:27b.j", "#8f4814", [ "h9.3", "v-105.6", "h441.6", "v192", "h-105.6" ] ],
+    [ "esp:D18", "bb2:28b.j", "orange", [ "h18.9", "v-105.6", "h422.4", "v192", "h-86.4" ] ],
+    [ "bb2:27b.i", "ultrasonic3:TRIG", "#8f4814", [ "v0" ] ],
+    [ "bb2:28b.i", "ultrasonic3:ECHO", "orange", [ "v0" ] ],
+    [ "bb2:bp.12", "lcd1:VCC", "red", [ "v27.9", "h-161.6", "v48" ] ],
+    [ "bb2:bn.11", "lcd1:GND", "black", [ "v8.3", "h-142.4", "v48" ] ],
+    [ "lcd1:SDA", "esp:D21", "gold", [ "h-28.8", "v-153.4", "h-28.8", "v-57.6" ] ],
+    [ "lcd1:SCL", "esp:D22", "yellow", [ "h-38.4", "v-172.5", "h-9.6", "v-76.5" ] ],
+    [ "ultrasonic2:VCC", "bb2:3b.f", "", [ "$bb" ] ],
+    [ "ultrasonic2:TRIG", "bb2:4b.f", "", [ "$bb" ] ],
+    [ "ultrasonic2:ECHO", "bb2:5b.f", "", [ "$bb" ] ],
+    [ "ultrasonic2:GND", "bb2:6b.f", "", [ "$bb" ] ],
+    [ "ultrasonic3:VCC", "bb2:26b.f", "", [ "$bb" ] ],
+    [ "ultrasonic3:TRIG", "bb2:27b.f", "", [ "$bb" ] ],
+    [ "ultrasonic3:ECHO", "bb2:28b.f", "", [ "$bb" ] ],
+    [ "ultrasonic3:GND", "bb2:29b.f", "", [ "$bb" ] ]
+  ],
+  "dependencies": {}
+}
