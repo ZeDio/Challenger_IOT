@@ -69,7 +69,7 @@ Quando isso acontece:
 
 # 🖥️ Preview do Projeto
 
-![Projeto IoT](./Projeto%20IOT.png)
+![Projeto IoT](./Projeto_IOT.png)
 
 ---
 
@@ -287,7 +287,7 @@ Todos os dados ficam disponíveis via JSON para integração com:
 
 Projeto desenvolvido por:
 
-**Ze Dio**
+**José Diogo - Arthur Dos Santos - **
 
 ---
 
