@@ -287,7 +287,7 @@ Todos os dados ficam disponíveis via JSON para integração com:
 
 Projeto desenvolvido por:
 
-**José Diogo - Arthur Dos Santos - **
+**ZeDio - Arth.pv - Marixavq - JuliaTButtler - Taikawaititi**
 
 ---
 
