@@ -1,73 +1,74 @@
 # 🐾 Challenger IoT — CLYVO VET
 
-Sistema IoT para monitoramento inteligente do comportamento alimentar e de hidratação de pets utilizando ESP32, sensores ultrassônicos e dashboard via API JSON.
+Sistema IoT inteligente para monitoramento alimentar e de hidratação de pets utilizando ESP32, sensores ultrassônicos, display LCD I2C e API REST em JSON.
 
 ---
 
 # 📖 Sobre o Projeto
 
-O **CLYVO VET** surgiu com o objetivo de auxiliar tutores e veterinários no acompanhamento contínuo da saúde animal.
+O **CLYVO VET** foi desenvolvido com o objetivo de auxiliar tutores e profissionais veterinários no acompanhamento do comportamento alimentar e da hidratação de animais domésticos.
 
-A proposta do projeto é transformar ações simples do dia a dia — como comer e beber água — em dados úteis para acompanhamento clínico e análise comportamental.
+O sistema monitora automaticamente quando o pet:
+- se aproxima do recipiente de comida
+- se aproxima do recipiente de água
 
-O sistema utiliza:
+Cada evento é registrado em tempo real, armazenando:
+- quantidade de visitas
+- horário exato do evento
+- tipo da interação
 
-- ESP32
-- Sensores ultrassônicos HC-SR04
-- Display LCD I2C
-- Wi-Fi
-- API REST em JSON
-
----
-
-# 🎯 Problema
-
-Grande parte dos tutores:
-
-- não possui histórico estruturado do pet
-- não acompanha mudanças comportamentais
-- só percebe problemas em situações críticas
-
-Isso dificulta:
-- diagnósticos veterinários
-- prevenção de doenças
-- identificação de alterações de comportamento
-
----
-
-# 💡 Solução
-
-O sistema monitora automaticamente:
-
-✅ frequência de alimentação  
-✅ frequência de hidratação  
-✅ horário das visitas aos recipientes  
-
-Esses dados podem ser utilizados futuramente em:
+Além disso, os dados são disponibilizados através de uma API REST em JSON, permitindo integração com:
 - dashboards
 - aplicativos
 - sistemas veterinários
-- análise comportamental
-- inteligência artificial
+- plataformas IoT
 
 ---
 
-# 🧠 Funcionamento
+# 🎯 Objetivo
 
-Os sensores HC-SR04 identificam quando o pet se aproxima:
-- do recipiente de comida
-- do recipiente de água
+O projeto busca transformar ações simples do cotidiano em dados relevantes para análise comportamental e prevenção de problemas de saúde.
 
-Quando isso acontece:
-1. o sistema registra a visita
-2. salva o horário via NTP
-3. atualiza os contadores
-4. exibe informações no LCD
-5. disponibiliza os dados via API JSON
+Muitos tutores:
+- não acompanham a rotina do pet
+- não percebem alterações de comportamento rapidamente
+- não possuem histórico de alimentação e hidratação
+
+O CLYVO VET resolve isso automatizando todo o monitoramento.
 
 ---
 
-# 🖥️ Preview do Projeto
+# 💡 Funcionalidades
+
+✅ Monitoramento de alimentação  
+✅ Monitoramento de hidratação  
+✅ Registro de horário via NTP  
+✅ Display LCD em tempo real  
+✅ API REST em JSON  
+✅ Integração via Wi-Fi  
+✅ Botões físicos para visualização dos dados no Serial Monitor  
+✅ Sistema embarcado utilizando ESP32  
+
+---
+
+# 🧠 Funcionamento do Sistema
+
+O sistema utiliza dois sensores ultrassônicos HC-SR04:
+
+- um sensor monitora a área da comida
+- outro sensor monitora a área da água
+
+Quando o pet aproxima do recipiente:
+1. o sensor detecta redução da distância
+2. o ESP32 identifica a presença
+3. o sistema registra o horário via NTP
+4. os contadores são atualizados
+5. o LCD exibe o evento
+6. os dados ficam disponíveis na API REST
+
+---
+
+# 🖼️ Preview do Projeto
 
 ![Projeto IoT](./Projeto_IOT.png)
 
@@ -76,32 +77,81 @@ Quando isso acontece:
 # 🔧 Tecnologias Utilizadas
 
 ## Hardware
+
 - ESP32
-- HC-SR04
+- 2x Sensores HC-SR04
 - LCD I2C 16x2
 - Protoboard
+- Botões físicos
+- Jumpers
 
 ---
 
 ## Software
+
 - Arduino C++
-- Wokwi
-- WiFi.h
-- WebServer.h
-- LiquidCrystal_I2C
+- ESP32 WiFi
+- WebServer
 - NTP
+- Wokwi
+- LCD I2C
+
+---
+
+# ⚙️ Componentes e Pinos
+
+## Sensores
+
+### Sensor de Comida
+
+| Componente | Pino ESP32 |
+|---|---|
+| TRIG | GPIO 5 |
+| ECHO | GPIO 18 |
+
+---
+
+### Sensor de Água
+
+| Componente | Pino ESP32 |
+|---|---|
+| TRIG | GPIO 15 |
+| ECHO | GPIO 2 |
+
+---
+
+## LCD I2C
+
+| LCD | ESP32 |
+|---|---|
+| SDA | GPIO 21 |
+| SCL | GPIO 22 |
+| VCC | 3V3 |
+| GND | GND |
+
+---
+
+## Botões
+
+| Botão | Pino |
+|---|---|
+| STATUS | GPIO 13 |
+| ÁGUA | GPIO 12 |
+| COMIDA | GPIO 14 |
 
 ---
 
 # 🌐 API REST
 
-O ESP32 cria um pequeno servidor HTTP.
+O ESP32 cria um servidor HTTP local disponibilizando os dados do sistema em formato JSON.
 
 ---
 
-## `/status`
+# 📡 Endpoint `/status`
 
-Retorna o resumo geral:
+Retorna o resumo geral do sistema.
+
+## Exemplo
 
 ```json
 {
@@ -112,11 +162,13 @@ Retorna o resumo geral:
 
 ---
 
-## `/comida`
+# 🍖 Endpoint `/comida`
 
 Retorna:
-- quantidade de visitas
+- quantidade de visitas à comida
 - horários registrados
+
+## Exemplo
 
 ```json
 {
@@ -130,7 +182,13 @@ Retorna:
 
 ---
 
-## `/agua`
+# 💧 Endpoint `/agua`
+
+Retorna:
+- quantidade de visitas à água
+- horários registrados
+
+## Exemplo
 
 ```json
 {
@@ -144,35 +202,39 @@ Retorna:
 
 ---
 
-# 📡 Conectividade
+# 🖥️ Interface LCD
 
-O sistema:
-- conecta no Wi-Fi
-- sincroniza horário automaticamente via NTP
-- exibe IP no LCD
-- disponibiliza API local
+O display LCD apresenta informações em tempo real durante toda execução do sistema.
 
 ---
 
-# 🧠 Interface LCD
-
-Durante o funcionamento:
-
 ## Inicialização
+
 ```text
 Iniciando...
 ```
 
 ---
 
-## Wi-Fi
+## Conexão Wi-Fi
+
+```text
+Conectando
+WiFi...
+```
+
+---
+
+## Wi-Fi conectado
+
 ```text
 WiFi conectado
 ```
 
 ---
 
-## IP
+## Exibição do IP
+
 ```text
 IP:
 192.168.x.x
@@ -181,6 +243,7 @@ IP:
 ---
 
 ## Tela principal
+
 ```text
 Refeicoes: X
 Hidratacao: X
@@ -189,6 +252,7 @@ Hidratacao: X
 ---
 
 ## Evento de alimentação
+
 ```text
 Pet comeu!
 12:40:22
@@ -197,6 +261,7 @@ Pet comeu!
 ---
 
 ## Evento de hidratação
+
 ```text
 Bebeu agua!
 13:10:11
@@ -204,21 +269,87 @@ Bebeu agua!
 
 ---
 
-# 🐶 Aplicações Futuras
+# 🔘 Botões Físicos
 
-O projeto pode evoluir para:
+O sistema possui três botões físicos conectados ao ESP32.
 
-- integração com veterinários
-- dashboards web
-- histórico completo do pet
-- análise de comportamento
-- IA para prevenção
-- alertas automáticos
-- acompanhamento remoto
+Cada botão imprime um JSON específico no Serial Monitor.
 
 ---
 
-# 🚀 Simulação no Wokwi
+## Botão STATUS — GPIO 13
+
+Exibe:
+
+```json
+{
+  "visitasComida": 5,
+  "visitasAgua": 3
+}
+```
+
+---
+
+## Botão ÁGUA — GPIO 12
+
+Exibe:
+
+```json
+{
+  "visitasAgua": 3,
+  "visitaHorario": [
+    "09:14:55",
+    "13:02:10"
+  ]
+}
+```
+
+---
+
+## Botão COMIDA — GPIO 14
+
+Exibe:
+
+```json
+{
+  "visitasComida": 5,
+  "visitaHorario": [
+    "08:10:22",
+    "12:40:11"
+  ]
+}
+```
+
+---
+
+# 📡 Conectividade
+
+O sistema:
+- conecta automaticamente ao Wi-Fi
+- sincroniza horário via NTP
+- cria um servidor HTTP local
+- disponibiliza os dados em JSON
+
+---
+
+# 🧠 Lógica de Detecção
+
+Os sensores ultrassônicos medem distância continuamente.
+
+O sistema considera presença quando a distância medida for menor que:
+
+```cpp
+const int LIMITE = 15;
+```
+
+Isso significa:
+- pet próximo do recipiente
+- evento registrado
+- contador incrementado
+
+---
+
+# 🧪 Simulação no Wokwi
 
 🔗 https://wokwi.com/projects/463362553076345857
 
@@ -230,64 +361,38 @@ O projeto pode evoluir para:
 
 ---
 
-# ⚙️ Como Funciona
+# 🚀 Possíveis Evoluções
 
-## 1. Sensores
+O projeto pode evoluir para:
 
-Os sensores ultrassônicos medem distância continuamente.
-
-Quando o pet aproxima:
-- a distância diminui
-- o sistema identifica presença
-
----
-
-## 2. Detecção
-
-Se a distância estiver abaixo do limite definido:
-
-```cpp
-const int LIMITE = 15;
-```
-
-o sistema considera:
-```text
-"pet próximo do recipiente"
-```
+- dashboard web
+- aplicativo mobile
+- histórico completo do pet
+- análise comportamental
+- inteligência artificial
+- alertas automáticos
+- acompanhamento remoto
+- integração veterinária
 
 ---
 
-## 3. Registro
-
-O ESP32:
-- incrementa o contador
-- pega horário via internet (NTP)
-- salva o evento
-
----
-
-## 4. Exibição
-
-O LCD:
-- mostra eventos em tempo real
-- atualiza alimentação e hidratação
-
----
-
-## 5. API
-
-Todos os dados ficam disponíveis via JSON para integração com:
-- dashboards
-- aplicativos
-- sistemas externos
-
----
-
-# 👨‍💻 Autor
+# 👨‍💻 Equipe
 
 Projeto desenvolvido por:
 
-**ZeDio - Arth.pv - Marixavq - JuliaTButtler - Taikawaititi**
+- ZeDio
+- Arth.pv
+- Marixavq
+- JuliaTButtler
+- Taikawaititi
+
+---
+
+# 📚 Projeto Acadêmico
+
+Projeto desenvolvido para a disciplina:
+
+**Disruptive Architectures: IoT, IoB & Generative AI**
 
 ---
 

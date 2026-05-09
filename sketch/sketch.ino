@@ -47,6 +47,13 @@ WebServer server(80);
 #define ECHO_AGUA 2
 
 // =========================
+// BOTÕES
+// =========================
+#define BTN_STATUS 13
+#define BTN_AGUA 12
+#define BTN_COMIDA 14
+
+// =========================
 // CONTADORES
 // =========================
 int visitasComida = 0;
@@ -57,6 +64,13 @@ int visitasAgua = 0;
 // =========================
 bool detectouComida = false;
 bool detectouAgua = false;
+
+// =========================
+// ESTADO BOTÕES
+// =========================
+bool ultimoEstadoStatus = HIGH;
+bool ultimoEstadoAgua = HIGH;
+bool ultimoEstadoComida = HIGH;
 
 // =========================
 // HORÁRIOS
@@ -122,6 +136,83 @@ String pegarHorario() {
 }
 
 // =========================
+// JSON STATUS
+// =========================
+String gerarJsonStatus() {
+
+  String json = "{";
+
+  json += "\"visitasComida\":";
+  json += visitasComida;
+  json += ",";
+
+  json += "\"visitasAgua\":";
+  json += visitasAgua;
+
+  json += "}";
+
+  return json;
+}
+
+// =========================
+// JSON COMIDA
+// =========================
+String gerarJsonComida() {
+
+  String json = "{";
+
+  json += "\"visitasComida\":";
+  json += visitasComida;
+  json += ",";
+
+  json += "\"visitaHorario\":[";
+
+  for (int i = 0; i < visitasComida; i++) {
+
+    json += "\"";
+    json += horariosComida[i];
+    json += "\"";
+
+    if (i < visitasComida - 1) {
+      json += ",";
+    }
+  }
+
+  json += "]}";
+
+  return json;
+}
+
+// =========================
+// JSON AGUA
+// =========================
+String gerarJsonAgua() {
+
+  String json = "{";
+
+  json += "\"visitasAgua\":";
+  json += visitasAgua;
+  json += ",";
+
+  json += "\"visitaHorario\":[";
+
+  for (int i = 0; i < visitasAgua; i++) {
+
+    json += "\"";
+    json += horariosAgua[i];
+    json += "\"";
+
+    if (i < visitasAgua - 1) {
+      json += ",";
+    }
+  }
+
+  json += "]}";
+
+  return json;
+}
+
+// =========================
 // SETUP
 // =========================
 void setup() {
@@ -146,6 +237,13 @@ void setup() {
 
   pinMode(TRIG_AGUA, OUTPUT);
   pinMode(ECHO_AGUA, INPUT);
+
+  // =========================
+  // BOTÕES
+  // =========================
+  pinMode(BTN_STATUS, INPUT_PULLUP);
+  pinMode(BTN_AGUA, INPUT_PULLUP);
+  pinMode(BTN_COMIDA, INPUT_PULLUP);
 
   // =========================
   // WIFI
@@ -193,16 +291,10 @@ void setup() {
   // =========================
   server.on("/status", []() {
 
-    String json = "{";
+    String json = gerarJsonStatus();
 
-    json += "\"visitasComida\":";
-    json += visitasComida;
-    json += ",";
-
-    json += "\"visitasAgua\":";
-    json += visitasAgua;
-
-    json += "}";
+    Serial.println("===== /status =====");
+    Serial.println(json);
 
     server.send(200, "application/json", json);
   });
@@ -212,26 +304,10 @@ void setup() {
   // =========================
   server.on("/comida", []() {
 
-    String json = "{";
+    String json = gerarJsonComida();
 
-    json += "\"visitasComida\":";
-    json += visitasComida;
-    json += ",";
-
-    json += "\"visitaHorario\":[";
-
-    for (int i = 0; i < visitasComida; i++) {
-
-      json += "\"";
-      json += horariosComida[i];
-      json += "\"";
-
-      if (i < visitasComida - 1) {
-        json += ",";
-      }
-    }
-
-    json += "]}";
+    Serial.println("===== /comida =====");
+    Serial.println(json);
 
     server.send(200, "application/json", json);
   });
@@ -241,26 +317,10 @@ void setup() {
   // =========================
   server.on("/agua", []() {
 
-    String json = "{";
+    String json = gerarJsonAgua();
 
-    json += "\"visitasAgua\":";
-    json += visitasAgua;
-    json += ",";
-
-    json += "\"visitaHorario\":[";
-
-    for (int i = 0; i < visitasAgua; i++) {
-
-      json += "\"";
-      json += horariosAgua[i];
-      json += "\"";
-
-      if (i < visitasAgua - 1) {
-        json += ",";
-      }
-    }
-
-    json += "]}";
+    Serial.println("===== /agua =====");
+    Serial.println(json);
 
     server.send(200, "application/json", json);
   });
@@ -284,6 +344,48 @@ void loop() {
   server.handleClient();
 
   // =========================
+  // LEITURA BOTÃO STATUS
+  // =========================
+  bool estadoStatus = digitalRead(BTN_STATUS);
+
+  if (ultimoEstadoStatus == HIGH && estadoStatus == LOW) {
+
+    Serial.println("");
+    Serial.println("===== /status =====");
+    Serial.println(gerarJsonStatus());
+  }
+
+  ultimoEstadoStatus = estadoStatus;
+
+  // =========================
+  // LEITURA BOTÃO AGUA
+  // =========================
+  bool estadoAgua = digitalRead(BTN_AGUA);
+
+  if (ultimoEstadoAgua == HIGH && estadoAgua == LOW) {
+
+    Serial.println("");
+    Serial.println("===== /agua =====");
+    Serial.println(gerarJsonAgua());
+  }
+
+  ultimoEstadoAgua = estadoAgua;
+
+  // =========================
+  // LEITURA BOTÃO COMIDA
+  // =========================
+  bool estadoComida = digitalRead(BTN_COMIDA);
+
+  if (ultimoEstadoComida == HIGH && estadoComida == LOW) {
+
+    Serial.println("");
+    Serial.println("===== /comida =====");
+    Serial.println(gerarJsonComida());
+  }
+
+  ultimoEstadoComida = estadoComida;
+
+  // =========================
   // COMIDA
   // =========================
   float distanciaComida = medirDistancia(TRIG_COMIDA, ECHO_COMIDA);
@@ -300,6 +402,7 @@ void loop() {
 
       visitasComida++;
 
+      Serial.println("");
       Serial.println("Pet foi comer!");
 
       mostrarEventoLCD("Pet comeu!", horario);
@@ -327,6 +430,7 @@ void loop() {
 
       visitasAgua++;
 
+      Serial.println("");
       Serial.println("Pet foi beber agua!");
 
       mostrarEventoLCD("Bebeu agua!", horario);
@@ -337,7 +441,7 @@ void loop() {
     detectouAgua = false;
   }
 
-  delay(1000);
+  delay(100);
 }
 
 // =========================
