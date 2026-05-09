@@ -395,9 +395,3 @@ Projeto desenvolvido para a disciplina:
 **Disruptive Architectures: IoT, IoB & Generative AI**
 
 ---
-
-# 📚 Projeto Acadêmico
-
-Projeto desenvolvido para a disciplina:
-
-**Disruptive Architectures: IoT, IoB & Generative AI**
