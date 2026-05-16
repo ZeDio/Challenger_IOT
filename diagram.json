@@ -75,6 +75,12 @@
     [ "bb2:bn.11", "lcd1:GND", "black", [ "v8.3", "h-142.4", "v48" ] ],
     [ "lcd1:SDA", "esp:D21", "gold", [ "h-28.8", "v-153.4", "h-28.8", "v-57.6" ] ],
     [ "lcd1:SCL", "esp:D22", "yellow", [ "h-38.4", "v-172.5", "h-9.6", "v-76.5" ] ],
+    [ "btn1:2.l", "esp:D13", "white", [ "h-19.2", "v-28.4", "h-67.2", "v-76.6" ] ],
+    [ "esp:D12", "btn2:2.l", "gold", [ "h-19.2", "v95.3", "h67.2", "v47.6" ] ],
+    [ "esp:D14", "btn3:2.l", "red", [ "h-28.8", "v115.3", "h67.2", "v66.8" ] ],
+    [ "btn1:1.r", "bb2:bn.2", "black", [ "v0", "h29.6", "v-19.2", "h76.8" ] ],
+    [ "btn2:1.r", "bb2:bn.3", "black", [ "v0", "h20", "v-48", "h96" ] ],
+    [ "btn3:1.r", "bb2:bn.4", "black", [ "v0", "h10.4", "v-76.8", "h115.2" ] ],
     [ "ultrasonic2:VCC", "bb2:3b.f", "", [ "$bb" ] ],
     [ "ultrasonic2:TRIG", "bb2:4b.f", "", [ "$bb" ] ],
     [ "ultrasonic2:ECHO", "bb2:5b.f", "", [ "$bb" ] ],
@@ -82,13 +88,7 @@
     [ "ultrasonic3:VCC", "bb2:26b.f", "", [ "$bb" ] ],
     [ "ultrasonic3:TRIG", "bb2:27b.f", "", [ "$bb" ] ],
     [ "ultrasonic3:ECHO", "bb2:28b.f", "", [ "$bb" ] ],
-    [ "ultrasonic3:GND", "bb2:29b.f", "", [ "$bb" ] ],
-    [ "btn1:2.l", "esp:D13", "white", [ "h-19.2", "v-28.4", "h-67.2", "v-76.6" ] ],
-    [ "esp:D12", "btn2:2.l", "gold", [ "h-19.2", "v95.3", "h67.2", "v47.6" ] ],
-    [ "esp:D14", "btn3:2.l", "red", [ "h-28.8", "v115.3", "h67.2", "v66.8" ] ],
-    [ "btn1:1.r", "bb2:bn.2", "black", [ "v0", "h29.6", "v-19.2", "h76.8" ] ],
-    [ "btn2:1.r", "bb2:bn.3", "black", [ "v0", "h20", "v-48", "h96" ] ],
-    [ "btn3:1.r", "bb2:bn.4", "black", [ "v0", "h10.4", "v-76.8", "h115.2" ] ]
+    [ "ultrasonic3:GND", "bb2:29b.f", "", [ "$bb" ] ]
   ],
   "dependencies": {}
 }

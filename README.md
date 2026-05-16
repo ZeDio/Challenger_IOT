@@ -15,6 +15,7 @@ O sistema monitora automaticamente quando o pet:
 Cada evento é registrado em tempo real, armazenando:
 - quantidade de visitas
 - horário exato do evento
+- histórico diário
 - tipo da interação
 
 Além disso, os dados são disponibilizados através de uma API REST em JSON, permitindo integração com:
@@ -43,8 +44,10 @@ O CLYVO VET resolve isso automatizando todo o monitoramento.
 ✅ Monitoramento de alimentação  
 ✅ Monitoramento de hidratação  
 ✅ Registro de horário via NTP  
-✅ Display LCD em tempo real  
+✅ Histórico diário automático  
+✅ Reset automático a cada novo dia  
 ✅ API REST em JSON  
+✅ Display LCD em tempo real  
 ✅ Integração via Wi-Fi  
 ✅ Botões físicos para visualização dos dados no Serial Monitor  
 ✅ Sistema embarcado utilizando ESP32  
@@ -62,9 +65,14 @@ Quando o pet aproxima do recipiente:
 1. o sensor detecta redução da distância
 2. o ESP32 identifica a presença
 3. o sistema registra o horário via NTP
-4. os contadores são atualizados
+4. os contadores do dia são atualizados
 5. o LCD exibe o evento
 6. os dados ficam disponíveis na API REST
+
+Quando o relógio atinge **00:00**, o sistema:
+- cria automaticamente um novo dia
+- reinicia os contadores diários
+- mantém o histórico dos dias anteriores
 
 ---
 
@@ -149,12 +157,13 @@ O ESP32 cria um servidor HTTP local disponibilizando os dados do sistema em form
 
 # 📡 Endpoint `/status`
 
-Retorna o resumo geral do sistema.
+Retorna o resumo geral do dia atual.
 
 ## Exemplo
 
 ```json
 {
+  "data": "12/03/2026",
   "visitasComida": 5,
   "visitasAgua": 3
 }
@@ -172,6 +181,7 @@ Retorna:
 
 ```json
 {
+  "data": "12/03/2026",
   "visitasComida": 5,
   "visitaHorario": [
     "08:10:22",
@@ -192,11 +202,33 @@ Retorna:
 
 ```json
 {
+  "data": "12/03/2026",
   "visitasAgua": 3,
   "visitaHorario": [
     "09:14:55",
     "13:02:10"
   ]
+}
+```
+
+---
+
+# 📚 Endpoint `/historico`
+
+Retorna o histórico geral separado por dias.
+
+## Exemplo
+
+```json
+{
+  "12/03/2026": {
+    "visitasComida": 4,
+    "visitasAgua": 2
+  },
+  "13/03/2026": {
+    "visitasComida": 7,
+    "visitasAgua": 5
+  }
 }
 ```
 
@@ -283,6 +315,7 @@ Exibe:
 
 ```json
 {
+  "data": "12/03/2026",
   "visitasComida": 5,
   "visitasAgua": 3
 }
@@ -296,6 +329,7 @@ Exibe:
 
 ```json
 {
+  "data": "12/03/2026",
   "visitasAgua": 3,
   "visitaHorario": [
     "09:14:55",
@@ -312,6 +346,7 @@ Exibe:
 
 ```json
 {
+  "data": "12/03/2026",
   "visitasComida": 5,
   "visitaHorario": [
     "08:10:22",
@@ -329,6 +364,7 @@ O sistema:
 - sincroniza horário via NTP
 - cria um servidor HTTP local
 - disponibiliza os dados em JSON
+- mantém histórico diário automático
 
 ---
 
@@ -346,6 +382,24 @@ Isso significa:
 - pet próximo do recipiente
 - evento registrado
 - contador incrementado
+- horário armazenado
+
+---
+
+# 📅 Sistema de Histórico Diário
+
+O sistema possui controle automático de datas utilizando sincronização NTP.
+
+Quando um novo dia começa:
+- os contadores diários são reiniciados
+- novos registros passam a pertencer ao novo dia
+- o histórico anterior permanece salvo
+
+Isso permite:
+- acompanhamento por datas
+- análises futuras
+- dashboards históricos
+- comparação de comportamento
 
 ---
 
@@ -367,12 +421,15 @@ O projeto pode evoluir para:
 
 - dashboard web
 - aplicativo mobile
-- histórico completo do pet
+- banco de dados
+- histórico permanente
 - análise comportamental
 - inteligência artificial
 - alertas automáticos
 - acompanhamento remoto
 - integração veterinária
+- gráficos em tempo real
+- notificações via celular
 
 ---
 

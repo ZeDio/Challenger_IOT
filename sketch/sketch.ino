@@ -79,6 +79,18 @@ String horariosComida[50];
 String horariosAgua[50];
 
 // =========================
+// HISTÓRICO DIÁRIO
+// =========================
+String datas[30];
+
+int historicoComida[30];
+int historicoAgua[30];
+
+int totalDias = 0;
+
+String dataAtual = "";
+
+// =========================
 // LIMITE
 // =========================
 const int LIMITE = 15;
@@ -136,11 +148,82 @@ String pegarHorario() {
 }
 
 // =========================
+// PEGAR DATA
+// =========================
+String pegarData() {
+
+  struct tm timeinfo;
+
+  if (!getLocalTime(&timeinfo)) {
+    return "00/00/0000";
+  }
+
+  char data[11];
+
+  strftime(data, sizeof(data), "%d/%m/%Y", &timeinfo);
+
+  return String(data);
+}
+
+// =========================
+// VERIFICAR NOVO DIA
+// =========================
+void verificarNovoDia() {
+
+  String hoje = pegarData();
+
+  // Primeiro dia
+  if (dataAtual == "") {
+
+    dataAtual = hoje;
+
+    datas[totalDias] = hoje;
+    historicoComida[totalDias] = 0;
+    historicoAgua[totalDias] = 0;
+
+    totalDias++;
+  }
+
+  // Virou o dia
+  if (hoje != dataAtual) {
+
+    dataAtual = hoje;
+
+    visitasComida = 0;
+    visitasAgua = 0;
+
+    // Limpa horários
+    for (int i = 0; i < 50; i++) {
+
+      horariosComida[i] = "";
+      horariosAgua[i] = "";
+    }
+
+    datas[totalDias] = hoje;
+
+    historicoComida[totalDias] = 0;
+    historicoAgua[totalDias] = 0;
+
+    totalDias++;
+
+    Serial.println("");
+    Serial.println("===== NOVO DIA =====");
+    Serial.println(hoje);
+
+    atualizarLCD();
+  }
+}
+
+// =========================
 // JSON STATUS
 // =========================
 String gerarJsonStatus() {
 
   String json = "{";
+
+  json += "\"data\":\"";
+  json += dataAtual;
+  json += "\",";
 
   json += "\"visitasComida\":";
   json += visitasComida;
@@ -160,6 +243,10 @@ String gerarJsonStatus() {
 String gerarJsonComida() {
 
   String json = "{";
+
+  json += "\"data\":\"";
+  json += dataAtual;
+  json += "\",";
 
   json += "\"visitasComida\":";
   json += visitasComida;
@@ -190,6 +277,10 @@ String gerarJsonAgua() {
 
   String json = "{";
 
+  json += "\"data\":\"";
+  json += dataAtual;
+  json += "\",";
+
   json += "\"visitasAgua\":";
   json += visitasAgua;
   json += ",";
@@ -208,6 +299,38 @@ String gerarJsonAgua() {
   }
 
   json += "]}";
+
+  return json;
+}
+
+// =========================
+// JSON HISTÓRICO
+// =========================
+String gerarJsonHistorico() {
+
+  String json = "{";
+
+  for (int i = 0; i < totalDias; i++) {
+
+    json += "\"";
+    json += datas[i];
+    json += "\":{";
+
+    json += "\"visitasComida\":";
+    json += historicoComida[i];
+    json += ",";
+
+    json += "\"visitasAgua\":";
+    json += historicoAgua[i];
+
+    json += "}";
+
+    if (i < totalDias - 1) {
+      json += ",";
+    }
+  }
+
+  json += "}";
 
   return json;
 }
@@ -251,14 +374,17 @@ void setup() {
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
   lcd.clear();
+
   lcd.setCursor(0, 0);
   lcd.print("Conectando");
+
   lcd.setCursor(0, 1);
   lcd.print("WiFi...");
 
   Serial.println("Conectando WiFi...");
 
   while (WiFi.status() != WL_CONNECTED) {
+
     delay(500);
     Serial.print(".");
   }
@@ -267,12 +393,14 @@ void setup() {
   Serial.println("WiFi conectado!");
 
   lcd.clear();
+
   lcd.setCursor(0, 0);
   lcd.print("WiFi conectado");
 
   delay(2000);
 
   lcd.clear();
+
   lcd.setCursor(0, 0);
   lcd.print("IP:");
 
@@ -286,6 +414,8 @@ void setup() {
   // =========================
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
 
+  verificarNovoDia();
+
   // =========================
   // STATUS
   // =========================
@@ -293,6 +423,7 @@ void setup() {
 
     String json = gerarJsonStatus();
 
+    Serial.println("");
     Serial.println("===== /status =====");
     Serial.println(json);
 
@@ -306,6 +437,7 @@ void setup() {
 
     String json = gerarJsonComida();
 
+    Serial.println("");
     Serial.println("===== /comida =====");
     Serial.println(json);
 
@@ -319,7 +451,22 @@ void setup() {
 
     String json = gerarJsonAgua();
 
+    Serial.println("");
     Serial.println("===== /agua =====");
+    Serial.println(json);
+
+    server.send(200, "application/json", json);
+  });
+
+  // =========================
+  // HISTÓRICO
+  // =========================
+  server.on("/historico", []() {
+
+    String json = gerarJsonHistorico();
+
+    Serial.println("");
+    Serial.println("===== /historico =====");
     Serial.println(json);
 
     server.send(200, "application/json", json);
@@ -330,6 +477,7 @@ void setup() {
   // =========================
   server.begin();
 
+  Serial.println("");
   Serial.println("Servidor iniciado!");
   Serial.println(WiFi.localIP());
 
@@ -343,8 +491,10 @@ void loop() {
 
   server.handleClient();
 
+  verificarNovoDia();
+
   // =========================
-  // LEITURA BOTÃO STATUS
+  // BOTÃO STATUS
   // =========================
   bool estadoStatus = digitalRead(BTN_STATUS);
 
@@ -358,7 +508,7 @@ void loop() {
   ultimoEstadoStatus = estadoStatus;
 
   // =========================
-  // LEITURA BOTÃO AGUA
+  // BOTÃO AGUA
   // =========================
   bool estadoAgua = digitalRead(BTN_AGUA);
 
@@ -372,7 +522,7 @@ void loop() {
   ultimoEstadoAgua = estadoAgua;
 
   // =========================
-  // LEITURA BOTÃO COMIDA
+  // BOTÃO COMIDA
   // =========================
   bool estadoComida = digitalRead(BTN_COMIDA);
 
@@ -386,7 +536,7 @@ void loop() {
   ultimoEstadoComida = estadoComida;
 
   // =========================
-  // COMIDA
+  // SENSOR COMIDA
   // =========================
   float distanciaComida = medirDistancia(TRIG_COMIDA, ECHO_COMIDA);
 
@@ -402,6 +552,8 @@ void loop() {
 
       visitasComida++;
 
+      historicoComida[totalDias - 1] = visitasComida;
+
       Serial.println("");
       Serial.println("Pet foi comer!");
 
@@ -414,7 +566,7 @@ void loop() {
   }
 
   // =========================
-  // AGUA
+  // SENSOR AGUA
   // =========================
   float distanciaAgua = medirDistancia(TRIG_AGUA, ECHO_AGUA);
 
@@ -429,6 +581,8 @@ void loop() {
       horariosAgua[visitasAgua] = horario;
 
       visitasAgua++;
+
+      historicoAgua[totalDias - 1] = visitasAgua;
 
       Serial.println("");
       Serial.println("Pet foi beber agua!");
