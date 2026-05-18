@@ -101,6 +101,14 @@ A interface pode ser acessada através do IP local exibido no LCD.
 
 ---
 
+# 🎥 Vídeo Demonstrativo
+
+Assista à demonstração completa do projeto no YouTube:
+
+🔗 https://youtu.be/KIEXVWX5DYg?si=FwpfcfPynICqWMZZ
+
+---
+
 # 🔧 Tecnologias Utilizadas
 
 ## Hardware
@@ -187,3 +195,298 @@ Retorna o resumo geral do dia atual.
   "visitasComida": 5,
   "visitasAgua": 3
 }
+```
+
+---
+
+# 🍖 Endpoint `/comida`
+
+Retorna:
+- quantidade de visitas à comida
+- horários registrados
+
+## Exemplo
+
+```json
+{
+  "data": "12/03/2026",
+  "visitasComida": 5,
+  "visitaHorario": [
+    "08:10:22",
+    "12:40:11"
+  ]
+}
+```
+
+---
+
+# 💧 Endpoint `/agua`
+
+Retorna:
+- quantidade de visitas à água
+- horários registrados
+
+## Exemplo
+
+```json
+{
+  "data": "12/03/2026",
+  "visitasAgua": 3,
+  "visitaHorario": [
+    "09:14:55",
+    "13:02:10"
+  ]
+}
+```
+
+---
+
+# 📚 Endpoint `/historico`
+
+Retorna o histórico geral separado por dias.
+
+## Exemplo
+
+```json
+{
+  "12/03/2026": {
+    "visitasComida": 4,
+    "visitasAgua": 2
+  },
+  "13/03/2026": {
+    "visitasComida": 7,
+    "visitasAgua": 5
+  }
+}
+```
+
+---
+
+# 🖥️ Interface LCD
+
+O display LCD apresenta informações em tempo real durante toda execução do sistema.
+
+---
+
+## Inicialização
+
+```text
+Iniciando...
+```
+
+---
+
+## Conexão Wi-Fi
+
+```text
+Conectando
+WiFi...
+```
+
+---
+
+## Wi-Fi conectado
+
+```text
+WiFi conectado
+```
+
+---
+
+## Exibição do IP
+
+```text
+IP:
+192.168.x.x
+```
+
+---
+
+## Tela principal
+
+```text
+Refeicoes: X
+Hidratacao: X
+```
+
+---
+
+## Evento de alimentação
+
+```text
+Pet comeu!
+12:40:22
+```
+
+---
+
+## Evento de hidratação
+
+```text
+Bebeu agua!
+13:10:11
+```
+
+---
+
+# 🔘 Botões Físicos
+
+O sistema possui três botões físicos conectados ao ESP32.
+
+Cada botão imprime um JSON específico no Serial Monitor.
+
+---
+
+## Botão STATUS — GPIO 13
+
+Exibe:
+
+```json
+{
+  "data": "12/03/2026",
+  "visitasComida": 5,
+  "visitasAgua": 3
+}
+```
+
+---
+
+## Botão ÁGUA — GPIO 12
+
+Exibe:
+
+```json
+{
+  "data": "12/03/2026",
+  "visitasAgua": 3,
+  "visitaHorario": [
+    "09:14:55",
+    "13:02:10"
+  ]
+}
+```
+
+---
+
+## Botão COMIDA — GPIO 14
+
+Exibe:
+
+```json
+{
+  "data": "12/03/2026",
+  "visitasComida": 5,
+  "visitaHorario": [
+    "08:10:22",
+    "12:40:11"
+  ]
+}
+```
+
+---
+
+# 📡 Conectividade
+
+O sistema:
+- conecta automaticamente ao Wi-Fi
+- sincroniza horário via NTP
+- cria um servidor HTTP local
+- disponibiliza os dados em JSON
+- mantém histórico diário automático
+- hospeda um dashboard web local
+
+---
+
+# 🧠 Lógica de Detecção
+
+Os sensores ultrassônicos medem distância continuamente.
+
+O sistema considera presença quando a distância medida for menor que:
+
+```cpp
+const int LIMITE = 15;
+```
+
+Isso significa:
+- pet próximo do recipiente
+- evento registrado
+- contador incrementado
+- horário armazenado
+
+---
+
+# 📅 Sistema de Histórico Diário
+
+O sistema possui controle automático de datas utilizando sincronização NTP.
+
+Quando um novo dia começa:
+- os contadores diários são reiniciados
+- novos registros passam a pertencer ao novo dia
+- o histórico anterior permanece salvo
+
+Isso permite:
+- acompanhamento por datas
+- análises futuras
+- dashboards históricos
+- comparação de comportamento
+
+---
+
+# 🧪 Simulação no Wokwi
+
+🔗 https://wokwi.com/projects/463362553076345857
+
+---
+
+# 💻 Repositório GitHub
+
+🔗 https://github.com/ZeDio/Challenger_IOT
+
+---
+
+# 🚀 Possíveis Evoluções
+
+O projeto pode evoluir para:
+
+- dashboard avançado
+- aplicativo mobile
+- banco de dados
+- histórico permanente
+- análise comportamental
+- inteligência artificial
+- alertas automáticos
+- acompanhamento remoto
+- integração veterinária
+- gráficos em tempo real
+- notificações via celular
+
+---
+
+# 👨‍💻 Equipe
+
+Projeto desenvolvido por:
+
+- José Diogo - ZeDio
+🔗 https://github.com/ZeDio
+
+- Arthur Dos Santos - Arth.pv
+🔗 https://github.com/ArthurCPV
+
+- Mariana Xavier - Marixavq
+🔗 https://github.com/Marixavq
+
+- Júlia Tiziotto - JúliaB
+🔗 https://github.com/JuliaTButtler
+
+- Bruno Martins - Taikawaititi
+🔗 https://github.com/Taikawaititi
+
+---
+
+# 📚 Projeto Acadêmico
+
+Projeto desenvolvido para a disciplina:
+
+**Disruptive Architectures: IoT, IoB & Generative AI**
+
+---
