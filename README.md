@@ -1,6 +1,6 @@
 # 🐾 Challenger IoT — CLYVO VET
 
-Sistema IoT inteligente para monitoramento alimentar e de hidratação de pets utilizando ESP32, sensores ultrassônicos, display LCD I2C e API REST em JSON.
+Sistema IoT inteligente para monitoramento alimentar e de hidratação de pets utilizando ESP32, sensores ultrassônicos, display LCD I2C, API REST em JSON e dashboard web embarcado no próprio ESP32.
 
 ---
 
@@ -18,11 +18,10 @@ Cada evento é registrado em tempo real, armazenando:
 - histórico diário
 - tipo da interação
 
-Além disso, os dados são disponibilizados através de uma API REST em JSON, permitindo integração com:
-- dashboards
-- aplicativos
-- sistemas veterinários
-- plataformas IoT
+Além disso, os dados são disponibilizados através de:
+- API REST em JSON
+- dashboard web local
+- integração Wi-Fi
 
 ---
 
@@ -47,6 +46,7 @@ O CLYVO VET resolve isso automatizando todo o monitoramento.
 ✅ Histórico diário automático  
 ✅ Reset automático a cada novo dia  
 ✅ API REST em JSON  
+✅ Dashboard web embarcado no ESP32  
 ✅ Display LCD em tempo real  
 ✅ Integração via Wi-Fi  
 ✅ Botões físicos para visualização dos dados no Serial Monitor  
@@ -68,11 +68,30 @@ Quando o pet aproxima do recipiente:
 4. os contadores do dia são atualizados
 5. o LCD exibe o evento
 6. os dados ficam disponíveis na API REST
+7. o dashboard web é atualizado automaticamente
 
 Quando o relógio atinge **00:00**, o sistema:
 - cria automaticamente um novo dia
 - reinicia os contadores diários
 - mantém o histórico dos dias anteriores
+
+---
+
+# 🌐 Dashboard Web
+
+O projeto possui um dashboard web hospedado diretamente no ESP32.
+
+A interface pode ser acessada através do IP local exibido no LCD.
+
+## Funcionalidades do Dashboard
+
+✅ Visualização em tempo real  
+✅ Quantidade de refeições  
+✅ Quantidade de hidratações  
+✅ Histórico diário  
+✅ Atualização automática  
+✅ Interface responsiva  
+✅ Consumo da API REST local  
 
 ---
 
@@ -100,6 +119,7 @@ Quando o relógio atinge **00:00**, o sistema:
 - Arduino C++
 - ESP32 WiFi
 - WebServer
+- HTML/CSS/JavaScript
 - NTP
 - Wokwi
 - LCD I2C
@@ -167,288 +187,3 @@ Retorna o resumo geral do dia atual.
   "visitasComida": 5,
   "visitasAgua": 3
 }
-```
-
----
-
-# 🍖 Endpoint `/comida`
-
-Retorna:
-- quantidade de visitas à comida
-- horários registrados
-
-## Exemplo
-
-```json
-{
-  "data": "12/03/2026",
-  "visitasComida": 5,
-  "visitaHorario": [
-    "08:10:22",
-    "12:40:11"
-  ]
-}
-```
-
----
-
-# 💧 Endpoint `/agua`
-
-Retorna:
-- quantidade de visitas à água
-- horários registrados
-
-## Exemplo
-
-```json
-{
-  "data": "12/03/2026",
-  "visitasAgua": 3,
-  "visitaHorario": [
-    "09:14:55",
-    "13:02:10"
-  ]
-}
-```
-
----
-
-# 📚 Endpoint `/historico`
-
-Retorna o histórico geral separado por dias.
-
-## Exemplo
-
-```json
-{
-  "12/03/2026": {
-    "visitasComida": 4,
-    "visitasAgua": 2
-  },
-  "13/03/2026": {
-    "visitasComida": 7,
-    "visitasAgua": 5
-  }
-}
-```
-
----
-
-# 🖥️ Interface LCD
-
-O display LCD apresenta informações em tempo real durante toda execução do sistema.
-
----
-
-## Inicialização
-
-```text
-Iniciando...
-```
-
----
-
-## Conexão Wi-Fi
-
-```text
-Conectando
-WiFi...
-```
-
----
-
-## Wi-Fi conectado
-
-```text
-WiFi conectado
-```
-
----
-
-## Exibição do IP
-
-```text
-IP:
-192.168.x.x
-```
-
----
-
-## Tela principal
-
-```text
-Refeicoes: X
-Hidratacao: X
-```
-
----
-
-## Evento de alimentação
-
-```text
-Pet comeu!
-12:40:22
-```
-
----
-
-## Evento de hidratação
-
-```text
-Bebeu agua!
-13:10:11
-```
-
----
-
-# 🔘 Botões Físicos
-
-O sistema possui três botões físicos conectados ao ESP32.
-
-Cada botão imprime um JSON específico no Serial Monitor.
-
----
-
-## Botão STATUS — GPIO 13
-
-Exibe:
-
-```json
-{
-  "data": "12/03/2026",
-  "visitasComida": 5,
-  "visitasAgua": 3
-}
-```
-
----
-
-## Botão ÁGUA — GPIO 12
-
-Exibe:
-
-```json
-{
-  "data": "12/03/2026",
-  "visitasAgua": 3,
-  "visitaHorario": [
-    "09:14:55",
-    "13:02:10"
-  ]
-}
-```
-
----
-
-## Botão COMIDA — GPIO 14
-
-Exibe:
-
-```json
-{
-  "data": "12/03/2026",
-  "visitasComida": 5,
-  "visitaHorario": [
-    "08:10:22",
-    "12:40:11"
-  ]
-}
-```
-
----
-
-# 📡 Conectividade
-
-O sistema:
-- conecta automaticamente ao Wi-Fi
-- sincroniza horário via NTP
-- cria um servidor HTTP local
-- disponibiliza os dados em JSON
-- mantém histórico diário automático
-
----
-
-# 🧠 Lógica de Detecção
-
-Os sensores ultrassônicos medem distância continuamente.
-
-O sistema considera presença quando a distância medida for menor que:
-
-```cpp
-const int LIMITE = 15;
-```
-
-Isso significa:
-- pet próximo do recipiente
-- evento registrado
-- contador incrementado
-- horário armazenado
-
----
-
-# 📅 Sistema de Histórico Diário
-
-O sistema possui controle automático de datas utilizando sincronização NTP.
-
-Quando um novo dia começa:
-- os contadores diários são reiniciados
-- novos registros passam a pertencer ao novo dia
-- o histórico anterior permanece salvo
-
-Isso permite:
-- acompanhamento por datas
-- análises futuras
-- dashboards históricos
-- comparação de comportamento
-
----
-
-# 🧪 Simulação no Wokwi
-
-🔗 https://wokwi.com/projects/463362553076345857
-
----
-
-# 💻 Repositório GitHub
-
-🔗 https://github.com/ZeDio/Challenger_IOT
-
----
-
-# 🚀 Possíveis Evoluções
-
-O projeto pode evoluir para:
-
-- dashboard web
-- aplicativo mobile
-- banco de dados
-- histórico permanente
-- análise comportamental
-- inteligência artificial
-- alertas automáticos
-- acompanhamento remoto
-- integração veterinária
-- gráficos em tempo real
-- notificações via celular
-
----
-
-# 👨‍💻 Equipe
-
-Projeto desenvolvido por:
-
-- ZeDio
-- Arth.pv
-- Marixavq
-- JuliaTButtler
-- Taikawaititi
-
----
-
-# 📚 Projeto Acadêmico
-
-Projeto desenvolvido para a disciplina:
-
-**Disruptive Architectures: IoT, IoB & Generative AI**
-
----

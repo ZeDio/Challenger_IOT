@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLYVO VET - Challenger</title>
+
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #131313;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.title h1 {
+  font-size: 38px;
+  margin-bottom: 10px;
+}
+
+.title p {
+  color: #FFFFFF;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #161616;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.card h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.value {
+  font-size: 50px;
+  font-weight: bold;
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="title">
+    <h1>CLYVO VET Challenger</h1>
+    <p>Monitoramento Inteligente de Pets</p>
+  </div>
+
+  <div class="cards">
+
+    <div class="card">
+      <h2>🍖 Refeições</h2>
+      <div class="value" id="comida">0</div>
+    </div>
+
+    <div class="card">
+      <h2>💧 Hidratações</h2>
+      <div class="value" id="agua">0</div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+async function atualizarDados() {
+
+  try {
+
+    const response = await fetch('/status');
+    const data = await response.json();
+
+    document.getElementById('comida').innerText = data.visitasComida;
+    document.getElementById('agua').innerText = data.visitasAgua;
+
+  } catch (error) {
+
+    console.log('Erro ao atualizar dados');
+  }
+}
+
+atualizarDados();
+
+setInterval(atualizarDados, 2000);
+
+</script>
+
+</body>
+</html>
