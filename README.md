@@ -444,24 +444,6 @@ Isso permite:
 
 ---
 
-# 🚀 Possíveis Evoluções
-
-O projeto pode evoluir para:
-
-- dashboard avançado
-- aplicativo mobile
-- banco de dados
-- histórico permanente
-- análise comportamental
-- inteligência artificial
-- alertas automáticos
-- acompanhamento remoto
-- integração veterinária
-- gráficos em tempo real
-- notificações via celular
-
----
-
 # 👨‍💻 Equipe
 
 Projeto desenvolvido por:
