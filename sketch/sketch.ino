@@ -419,7 +419,7 @@ void setup() {
   // =========================
   // STATUS
   // =========================
-  server.on("/status", []() {
+  server.on("/status", HTTP_GET, []() {
 
     String json = gerarJsonStatus();
 
@@ -433,7 +433,7 @@ void setup() {
   // =========================
   // COMIDA
   // =========================
-  server.on("/comida", []() {
+  server.on("/comida", HTTP_GET, []() {
 
     String json = gerarJsonComida();
 
@@ -447,7 +447,7 @@ void setup() {
   // =========================
   // AGUA
   // =========================
-  server.on("/agua", []() {
+  server.on("/agua", HTTP_GET, []() {
 
     String json = gerarJsonAgua();
 
@@ -461,7 +461,7 @@ void setup() {
   // =========================
   // HISTÓRICO
   // =========================
-  server.on("/historico", []() {
+  server.on("/historico", HTTP_GET, []() {
 
     String json = gerarJsonHistorico();
 
@@ -475,7 +475,7 @@ void setup() {
   // =========================
   // DASHBOARD HTML
   // =========================
-  server.on("/", []() {
+  server.on("/", HTTP_GET, []() {
 
     String html = R"rawliteral(
 
