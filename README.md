@@ -105,7 +105,7 @@ A interface pode ser acessada através do IP local exibido no LCD.
 
 Assista à demonstração completa do projeto no YouTube:
 
-🔗 https://youtu.be/KIEXVWX5DYg?si=FwpfcfPynICqWMZZ
+🔗 https://youtu.be/ngr6tGGZNsc
 
 ---
 
