@@ -833,7 +833,7 @@ Essas bibliotecas são utilizadas para a integração com a Generative AI e para
 
 ## 6. 🔑 Configurar a API Key
 
-No arquivo Python do Assistente Virtual, localize:
+No arquivo config.py do Assistente Virtual, localize:
 
 ```python
 api_key = ""
@@ -852,13 +852,13 @@ api_key = "SUA_API_KEY"
 Com o Wokwi em execução, abra outro terminal no VS Code e execute o arquivo Python do assistente:
 
 ```bash
-python nome_do_arquivo.py
+python main.py
 ```
 
 No Windows, também pode usar:
 
 ```bash
-py nome_do_arquivo.py
+py main.py
 ```
 
 O terminal deverá iniciar o chat:
