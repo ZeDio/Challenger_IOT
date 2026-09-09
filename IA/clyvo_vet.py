@@ -7,7 +7,8 @@ Original file is located at
     https://colab.research.google.com/drive/1uQOtW1o4nlOGtkVi7hAWlylnQ0dQWuv4
 """
  
-''' pip install -q -U "google-genai>=2.3.0" "pydantic>=2.0" 
+''' 
+    pip install -q -U "google-genai>=2.3.0" "pydantic>=2.0" 
     Rodar esse comando antes de começar a rodar o codigo
 '''
  
@@ -644,24 +645,11 @@ class ConsultaCLYVOVET(BaseModel):
             "Descrição objetiva do que o agente deve retornar ao usuário "
             "após consultar os dados do IoT."
         )
-    )
- 
- 
-# EXEMPLO DE VISUALIZAÇÃO DO SCHEMA JSON
-if __name__ == "__main__":
-    import json
- 
-    print(
-        json.dumps(
-            ConsultaCLYVOVET.model_json_schema(),
-            indent=2,
-            ensure_ascii=False
-        )
-    )
+    );
+
  
 import requests
 from typing import Optional
- 
  
 BASE_URL = "http://localhost:8280"
  

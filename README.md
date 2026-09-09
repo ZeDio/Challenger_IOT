@@ -763,6 +763,170 @@ A integração representa a evolução do projeto de um sistema de monitoramento
 
 ---
 
+# 🚀 Como Rodar o Projeto
+
+Esta seção apresenta o passo a passo para executar o **CLYVO VET** localmente, incluindo a simulação do ESP32 no Wokwi e o Assistente Virtual baseado em Generative AI.
+
+## 📋 Pré-requisitos
+
+Antes de iniciar, instale:
+
+- Visual Studio Code
+- Python
+- Git
+- Extensão **Wokwi** para o Visual Studio Code
+- Uma **API Key do Google Gemini**
+
+> O Python é necessário para executar o Assistente Virtual CLYVO VET.
+
+## 1. 📥 Baixar o Projeto
+
+Clone o repositório:
+
+```bash
+git clone https://github.com/ZeDio/Challenger_IOT.git
+```
+
+Entre na pasta:
+
+```bash
+cd Challenger_IOT
+```
+
+Ou faça o download do projeto pelo GitHub e extraia os arquivos.
+
+## 2. 💻 Abrir no Visual Studio Code
+
+Abra o **Visual Studio Code** e selecione **File → Open Folder**. Escolha a pasta `Challenger_IOT`.
+
+## 3. 🔌 Rodar o Wokwi Localmente
+
+Instale a extensão do **Wokwi** no VS Code. Com o projeto aberto, localize os arquivos da simulação, como `diagram.json` e `sketch.ino`, e inicie a simulação pelo recurso do Wokwi disponível no VS Code.
+
+O ESP32 será executado com os sensores HC-SR04, LCD I2C, botões, Wi-Fi simulado e API REST. O Serial Monitor pode ser usado para acompanhar os eventos.
+
+> **Importante:** mantenha o ESP32/Wokwi em execução para testar a integração com o assistente.
+
+## 4. 🐍 Preparar o Python
+
+No VS Code, abra **Terminal → New Terminal** e verifique a instalação:
+
+```bash
+python --version
+```
+
+No Windows, também pode ser usado:
+
+```bash
+py --version
+```
+
+## 5. 📦 Instalar as Dependências
+
+Execute exatamente o comando abaixo no terminal:
+
+```bash
+pip install -q -U "google-genai>=2.3.0" "pydantic>=2.0"
+```
+
+Essas bibliotecas são utilizadas para a integração com a Generative AI e para a validação das respostas estruturadas com Pydantic.
+
+## 6. 🔑 Configurar a API Key
+
+No arquivo Python do Assistente Virtual, localize:
+
+```python
+api_key = ""
+```
+
+Informe sua chave da API do Google Gemini:
+
+```python
+api_key = "SUA_API_KEY"
+```
+
+> **Atenção:** não publique sua API Key no GitHub.
+
+## 7. 🤖 Executar o Assistente
+
+Com o Wokwi em execução, abra outro terminal no VS Code e execute o arquivo Python do assistente:
+
+```bash
+python nome_do_arquivo.py
+```
+
+No Windows, também pode usar:
+
+```bash
+py nome_do_arquivo.py
+```
+
+O terminal deverá iniciar o chat:
+
+```text
+--- Assistente CLYVO VET iniciado ---
+```
+
+Depois, faça perguntas relacionadas ao monitoramento:
+
+```text
+Você: Quantas vezes meu pet comeu hoje?
+
+CLYVO VET: Hoje foram registradas 4 visitas à comida.
+```
+
+Para encerrar:
+
+```text
+Você: sair
+```
+
+## 🔄 8. Fluxo Completo
+
+```text
+Baixar projeto
+      ↓
+Abrir no VS Code
+      ↓
+Iniciar Wokwi localmente
+      ↓
+ESP32 executa o monitoramento
+      ↓
+API REST disponibiliza os dados
+      ↓
+Instalar dependências Python
+      ↓
+Configurar API Key
+      ↓
+Executar o arquivo .py
+      ↓
+Assistente CLYVO VET
+      ↓
+Tutor faz uma pergunta
+      ↓
+IA utiliza as Tools
+      ↓
+Dados do IoT retornam em JSON
+      ↓
+IA interpreta os dados
+      ↓
+Resposta ao tutor
+```
+
+## ⚠️ Observações
+
+- O Wokwi deve estar executando para testar os dados do ESP32.
+- O Python deve estar instalado para executar o assistente.
+- A `google-genai` é usada na integração com a Generative AI.
+- O Pydantic valida a saída estruturada.
+- A API Key deve ser configurada antes da execução.
+- Não publique sua API Key no GitHub.
+- O assistente deve permanecer dentro do escopo definido para o CLYVO VET.
+- O assistente não deve inventar dados que não estejam disponíveis no IoT/API.
+
+
+---
+
 # 🧪 Simulação no Wokwi
 
 🔗 https://wokwi.com/projects/463362553076345857
