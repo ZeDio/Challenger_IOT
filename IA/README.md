@@ -58,7 +58,7 @@ Com a simulação do Wokwi rodando, abra um **novo terminal** no VS Code (**Term
 2. Instale as dependências:
 
 ```bash
-pip install -q -U "google-genai>=2.3.0" "pydantic>=2.0"
+pip install -r requirements.txt
 ```
 
 3. Configure sua chave de API. Abra o arquivo `config.py` e insira sua chave:

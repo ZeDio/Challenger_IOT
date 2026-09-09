@@ -1,162 +1,276 @@
-# 🐾 Challenger IoT — CLYVO VET
+# 🐾 CLYVO VET — Challenger IoT
 
-Sistema IoT inteligente para monitoramento alimentar e de hidratação de pets utilizando ESP32, sensores ultrassônicos, display LCD I2C, API REST em JSON e dashboard web embarcado no próprio ESP32.
+> Sistema inteligente de monitoramento de alimentação e hidratação de pets utilizando **IoT, ESP32, API REST, Inteligência Artificial Generativa e aplicação web em React**.
 
 ---
 
-# 📖 Sobre o Projeto
+## 📌 Sobre o Projeto
 
-O **CLYVO VET** foi desenvolvido com o objetivo de auxiliar tutores e profissionais veterinários no acompanhamento do comportamento alimentar e da hidratação de animais domésticos.
+O **CLYVO VET** é uma solução desenvolvida para auxiliar no acompanhamento da rotina de animais domésticos por meio da coleta e interpretação de dados.
 
-O sistema monitora automaticamente quando o pet:
-- se aproxima do recipiente de comida
-- se aproxima do recipiente de água
+O sistema utiliza sensores conectados a um **ESP32** para identificar a aproximação do pet aos recipientes de comida e água.
 
-Cada evento é registrado em tempo real, armazenando:
-- quantidade de visitas
-- horário exato do evento
-- histórico diário
-- tipo da interação
+Esses eventos são registrados com data e horário e disponibilizados por uma API REST em formato JSON.
 
-Além disso, os dados são disponibilizados através de:
-- API REST em JSON
-- dashboard web local
-- integração Wi-Fi
+Além do monitoramento IoT, o projeto possui um **Assistente Virtual baseado em Inteligência Artificial Generativa**, permitindo que o tutor consulte os dados utilizando linguagem natural.
+
+O projeto combina:
+
+- 🌐 Internet das Coisas (IoT)
+- 🤖 Inteligência Artificial Generativa
+- 🔌 API REST
+- ⚡ ESP32
+- 📊 Dados estruturados
+- 💻 React
+- 🐍 Python
+- 🔬 Wokwi
 
 ---
 
 # 🎯 Objetivo
 
-O projeto busca transformar ações simples do cotidiano em dados relevantes para análise comportamental e prevenção de problemas de saúde.
+O objetivo do CLYVO VET é transformar informações da rotina do pet em dados organizados e acessíveis.
 
-Muitos tutores:
-- não acompanham a rotina do pet
-- não percebem alterações de comportamento rapidamente
-- não possuem histórico de alimentação e hidratação
+O sistema permite acompanhar:
 
-O CLYVO VET resolve isso automatizando todo o monitoramento.
+- quantidade de visitas ao recipiente de comida;
+- quantidade de visitas ao recipiente de água;
+- horários das visitas;
+- histórico diário;
+- comparação entre dias;
+- consultas utilizando linguagem natural.
 
----
+A proposta é facilitar o acompanhamento da rotina do animal e fornecer informações que possam auxiliar tutores e profissionais veterinários.
 
-# 💡 Funcionalidades
-
-✅ Monitoramento de alimentação  
-✅ Monitoramento de hidratação  
-✅ Registro de horário via NTP  
-✅ Histórico diário automático  
-✅ Reset automático a cada novo dia  
-✅ API REST em JSON  
-✅ Dashboard web embarcado no ESP32  
-✅ Display LCD em tempo real  
-✅ Integração via Wi-Fi  
-✅ Botões físicos para visualização dos dados no Serial Monitor  
-✅ Sistema embarcado utilizando ESP32  
+> ⚠️ Os dados coletados pelo sistema representam apenas interações do pet com os recipientes. O CLYVO VET não realiza diagnóstico veterinário e não substitui um médico veterinário.
 
 ---
 
-# 🧠 Funcionamento do Sistema
+# 🧠 Conceito
 
-O sistema utiliza dois sensores ultrassônicos HC-SR04:
+O CLYVO VET foi pensado como um **Diário Inteligente do Pet**.
 
-- um sensor monitora a área da comida
-- outro sensor monitora a área da água
+A ideia é utilizar tecnologia para transformar eventos simples da rotina em informações organizadas.
 
-Quando o pet aproxima do recipiente:
-1. o sensor detecta redução da distância
-2. o ESP32 identifica a presença
-3. o sistema registra o horário via NTP
-4. os contadores do dia são atualizados
-5. o LCD exibe o evento
-6. os dados ficam disponíveis na API REST
-7. o dashboard web é atualizado automaticamente
-
-Quando o relógio atinge **00:00**, o sistema:
-- cria automaticamente um novo dia
-- reinicia os contadores diários
-- mantém o histórico dos dias anteriores
-
----
-
-# 🌐 Dashboard Web
-
-O projeto possui um dashboard web hospedado diretamente no ESP32.
-
-A interface pode ser acessada através do IP local exibido no LCD.
-
-## Funcionalidades do Dashboard
-
-✅ Visualização em tempo real  
-✅ Quantidade de refeições  
-✅ Quantidade de hidratações  
-✅ Histórico diário  
-✅ Atualização automática  
-✅ Interface responsiva  
-✅ Consumo da API REST local  
+```text
+Pet
+ │
+ ▼
+Sensores IoT
+ │
+ ▼
+ESP32
+ │
+ ▼
+API REST
+ │
+ ├──────────────► Dashboard
+ │
+ ▼
+FastAPI
+ │
+ ▼
+Inteligência Artificial
+ │
+ ▼
+Assistente CLYVO VET
+ │
+ ▼
+Tutor
+```
 
 ---
 
-# 🖼️ Preview do Projeto
+# 🚀 Funcionalidades
 
-![Projeto IoT](./Projeto_IOT.png)
+## 🐕 Monitoramento IoT
+
+- Detecção da aproximação do pet ao recipiente de comida.
+- Detecção da aproximação do pet ao recipiente de água.
+- Contagem automática dos eventos.
+- Registro dos horários.
+- Registro da data.
+- Histórico diário.
+- Reset automático dos contadores ao iniciar um novo dia.
+
+## 📡 API do ESP32
+
+O ESP32 disponibiliza os dados através de endpoints HTTP:
+
+- `/status`
+- `/comida`
+- `/agua`
+- `/historico`
+
+## 🤖 Inteligência Artificial
+
+O assistente permite realizar perguntas em linguagem natural, como:
+
+```text
+Quantas vezes meu pet comeu hoje?
+```
+
+```text
+Que horas ele bebeu água?
+```
+
+```text
+Ele comeu mais ontem ou hoje?
+```
+
+A IA consulta os dados reais do sistema IoT antes de responder.
+
+## 💻 Aplicação Web
+
+O projeto também possui uma aplicação frontend desenvolvida em:
+
+- React
+- Vite
+- JavaScript
+- Lucide React
+
+O frontend permite conversar com o Assistente CLYVO VET através de uma interface de chat.
 
 ---
 
-# 🎥 Vídeo Demonstrativo
+# 🏗️ Arquitetura do Projeto
 
-Assista à demonstração completa do projeto no YouTube:
+A arquitetura atual é dividida em três partes principais:
 
-🔗 https://youtu.be/ngr6tGGZNsc
+```text
+┌──────────────────────────────┐
+│          CLYVO VET           │
+└──────────────────────────────┘
+               │
+       ┌───────┴────────┐
+       │                │
+       ▼                ▼
+┌─────────────┐   ┌─────────────┐
+│     IoT     │   │  Frontend   │
+│    ESP32    │   │    React    │
+└──────┬──────┘   └──────┬──────┘
+       │                 │
+       │ HTTP/JSON       │ HTTP
+       ▼                 ▼
+┌──────────────────────────────┐
+│          FastAPI             │
+│          /chat               │
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│       Google Gemini          │
+│    Generative AI Agent       │
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│            Tools             │
+│  status / comida / agua /    │
+│          historico           │
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│        ESP32 / Wokwi         │
+└──────────────────────────────┘
+```
 
 ---
 
-# 🔧 Tecnologias Utilizadas
+# 📂 Estrutura do Projeto
+
+```text
+Challenger_IOT/
+│
+├── .gitignore
+├── README.md
+├── Projeto_IOT.png
+│
+├── IOT/
+│   ├── diagram.json
+│   ├── libraries.txt
+│   ├── wokwi-project.txt
+│   ├── wokwi.toml
+│   │
+│   └── sketch/
+│       └── sketch.ino
+│
+├── IA/
+│   ├── api.py
+│   ├── config.py
+│   ├── main.py
+│   ├── requirements.txt
+│   ├── schemas.py
+│   ├── SYSTEM_PROMPT.py
+│   └── tools.py
+│
+└── frontend_test/
+    ├── index.html
+    ├── package.json
+    ├── package-lock.json
+    │
+    └── src/
+        ├── main.jsx
+        └── styles.css
+```
+
+---
+
+# 🔌 Parte IoT
+
+O sistema IoT utiliza um **ESP32 DevKit** conectado a dois sensores ultrassônicos HC-SR04.
+
+Cada sensor é responsável por monitorar um recipiente.
+
+```text
+HC-SR04 #1
+   │
+   ▼
+Comida 🍖
+
+HC-SR04 #2
+   │
+   ▼
+Água 💧
+```
+
+Quando o sensor identifica uma aproximação dentro do limite configurado, o ESP32 registra o evento.
+
+---
+
+# 🔧 Componentes
 
 ## Hardware
 
-- ESP32
-- 2x Sensores HC-SR04
-- LCD I2C 16x2
+- ESP32 DevKit
+- 2x HC-SR04
+- LCD 16x2 I2C
+- 3x Push Buttons
 - Protoboard
-- Botões físicos
 - Jumpers
 
----
-
-## Software
-
-- Arduino C++
-- ESP32 WiFi
-- WebServer
-- HTML/CSS/JavaScript
-- NTP
-- Wokwi
-- LCD I2C
+O projeto também pode ser executado utilizando a simulação do **Wokwi**.
 
 ---
 
-# ⚙️ Componentes e Pinos
+# 📌 Mapeamento dos Pinos
 
-## Sensores
+## 🍖 Sensor de Comida
 
-### Sensor de Comida
-
-| Componente | Pino ESP32 |
+| HC-SR04 | ESP32 |
 |---|---|
 | TRIG | GPIO 5 |
 | ECHO | GPIO 18 |
 
----
+## 💧 Sensor de Água
 
-### Sensor de Água
-
-| Componente | Pino ESP32 |
+| HC-SR04 | ESP32 |
 |---|---|
 | TRIG | GPIO 15 |
 | ECHO | GPIO 2 |
 
----
-
-## LCD I2C
+## 📺 LCD I2C
 
 | LCD | ESP32 |
 |---|---|
@@ -165,11 +279,9 @@ Assista à demonstração completa do projeto no YouTube:
 | VCC | 3V3 |
 | GND | GND |
 
----
+## 🔘 Botões
 
-## Botões
-
-| Botão | Pino |
+| Função | GPIO |
 |---|---|
 | STATUS | GPIO 13 |
 | ÁGUA | GPIO 12 |
@@ -177,17 +289,92 @@ Assista à demonstração completa do projeto no YouTube:
 
 ---
 
-# 🌐 API REST
+# 📏 Detecção
 
-O ESP32 cria um servidor HTTP local disponibilizando os dados do sistema em formato JSON.
+O limite utilizado para identificar a aproximação do pet é:
+
+```cpp
+const int LIMITE = 15;
+```
+
+Quando a distância detectada fica dentro desse limite, o sistema considera que houve uma interação com o recipiente.
+
+O evento então:
+
+1. é detectado pelo HC-SR04;
+2. é processado pelo ESP32;
+3. recebe data e horário;
+4. incrementa o contador;
+5. armazena o horário;
+6. fica disponível através da API.
 
 ---
 
-# 📡 Endpoint `/status`
+# 🕐 Data e Horário
 
-Retorna o resumo geral do dia atual.
+O ESP32 utiliza **NTP (Network Time Protocol)** para sincronização do horário.
 
-## Exemplo
+Configuração utilizada:
+
+```cpp
+const char* ntpServer = "pool.ntp.org";
+const long gmtOffset_sec = -3 * 3600;
+const int daylightOffset_sec = 0;
+```
+
+O sistema utiliza o horário correspondente ao fuso de Brasília.
+
+---
+
+# 📅 Histórico Diário
+
+O ESP32 mantém registros organizados por data.
+
+Quando identifica uma mudança de dia:
+
+```text
+Dia anterior
+     │
+     ▼
+Salva histórico
+     │
+     ▼
+Novo dia
+     │
+     ▼
+Zera contadores
+     │
+     ▼
+Começa novos registros
+```
+
+O histórico pode ser consultado através do endpoint:
+
+```text
+GET /historico
+```
+
+---
+
+# 📡 API REST do ESP32
+
+O ESP32 utiliza `WebServer` para disponibilizar os dados em JSON.
+
+A configuração atual do Wokwi encaminha:
+
+```text
+http://localhost:8280
+```
+
+para a porta HTTP do ESP32.
+
+---
+
+## GET `/status`
+
+Retorna o resumo do dia atual.
+
+### Exemplo
 
 ```json
 {
@@ -199,13 +386,11 @@ Retorna o resumo geral do dia atual.
 
 ---
 
-# 🍖 Endpoint `/comida`
+## GET `/comida`
 
-Retorna:
-- quantidade de visitas à comida
-- horários registrados
+Retorna os eventos relacionados à alimentação.
 
-## Exemplo
+### Exemplo
 
 ```json
 {
@@ -213,20 +398,19 @@ Retorna:
   "visitasComida": 5,
   "visitaHorario": [
     "08:10:22",
-    "12:40:11"
+    "12:40:11",
+    "18:30:45"
   ]
 }
 ```
 
 ---
 
-# 💧 Endpoint `/agua`
+## GET `/agua`
 
-Retorna:
-- quantidade de visitas à água
-- horários registrados
+Retorna os eventos relacionados à hidratação.
 
-## Exemplo
+### Exemplo
 
 ```json
 {
@@ -234,24 +418,25 @@ Retorna:
   "visitasAgua": 3,
   "visitaHorario": [
     "09:14:55",
-    "13:02:10"
+    "13:02:10",
+    "20:15:30"
   ]
 }
 ```
 
 ---
 
-# 📚 Endpoint `/historico`
+## GET `/historico`
 
-Retorna o histórico geral separado por dias.
+Retorna o histórico diário.
 
-## Exemplo
+### Exemplo
 
 ```json
 {
   "12/03/2026": {
-    "visitasComida": 4,
-    "visitasAgua": 2
+    "visitasComida": 5,
+    "visitasAgua": 3
   },
   "13/03/2026": {
     "visitasComida": 7,
@@ -262,526 +447,461 @@ Retorna o histórico geral separado por dias.
 
 ---
 
-# 🖥️ Interface LCD
+# 📺 LCD
 
-O display LCD apresenta informações em tempo real durante toda execução do sistema.
+O LCD apresenta informações do monitoramento diretamente no dispositivo.
 
----
-
-## Inicialização
+Durante a inicialização:
 
 ```text
 Iniciando...
 ```
 
----
-
-## Conexão Wi-Fi
+Durante a conexão:
 
 ```text
 Conectando
 WiFi...
 ```
 
----
-
-## Wi-Fi conectado
+Após conectar:
 
 ```text
 WiFi conectado
 ```
 
----
-
-## Exibição do IP
+O IP do ESP32 também é apresentado:
 
 ```text
 IP:
 192.168.x.x
 ```
 
----
-
-## Tela principal
+Após a inicialização, o LCD apresenta:
 
 ```text
 Refeicoes: X
 Hidratacao: X
 ```
 
+Quando um evento é detectado, o display apresenta temporariamente a informação correspondente.
+
 ---
 
-## Evento de alimentação
+# 🔘 Botões
+
+O dispositivo possui três botões físicos.
+
+## STATUS — GPIO 13
+
+Exibe os dados do endpoint `/status` no Serial Monitor.
+
+## ÁGUA — GPIO 12
+
+Exibe os dados de hidratação.
+
+## COMIDA — GPIO 14
+
+Exibe os dados de alimentação.
+
+---
+
+# 🤖 Inteligência Artificial
+
+A camada de Inteligência Artificial foi desenvolvida em **Python** utilizando a API do **Google Gemini**.
+
+O agente foi desenvolvido para interpretar perguntas relacionadas aos dados coletados pelo IoT.
+
+---
+
+# 🐍 Backend da IA
+
+O backend utiliza:
+
+- Python
+- FastAPI
+- Uvicorn
+- Pydantic
+- Requests
+- Google GenAI
+
+As dependências estão disponíveis em:
 
 ```text
-Pet comeu!
-12:40:22
+IA/requirements.txt
 ```
 
----
-
-## Evento de hidratação
+Conteúdo atual:
 
 ```text
-Bebeu agua!
-13:10:11
+fastapi
+uvicorn
+requests
+pydantic
+google-genai>=2.3.0
 ```
 
 ---
 
-# 🔘 Botões Físicos
+# 🔌 API FastAPI
 
-O sistema possui três botões físicos conectados ao ESP32.
-
-Cada botão imprime um JSON específico no Serial Monitor.
-
----
-
-## Botão STATUS — GPIO 13
-
-Exibe:
-
-```json
-{
-  "data": "12/03/2026",
-  "visitasComida": 5,
-  "visitasAgua": 3
-}
-```
-
----
-
-## Botão ÁGUA — GPIO 12
-
-Exibe:
-
-```json
-{
-  "data": "12/03/2026",
-  "visitasAgua": 3,
-  "visitaHorario": [
-    "09:14:55",
-    "13:02:10"
-  ]
-}
-```
-
----
-
-## Botão COMIDA — GPIO 14
-
-Exibe:
-
-```json
-{
-  "data": "12/03/2026",
-  "visitasComida": 5,
-  "visitaHorario": [
-    "08:10:22",
-    "12:40:11"
-  ]
-}
-```
-
----
-
-# 📡 Conectividade
-
-O sistema:
-- conecta automaticamente ao Wi-Fi
-- sincroniza horário via NTP
-- cria um servidor HTTP local
-- disponibiliza os dados em JSON
-- mantém histórico diário automático
-- hospeda um dashboard web local
-
----
-
-# 🧠 Lógica de Detecção
-
-Os sensores ultrassônicos medem distância continuamente.
-
-O sistema considera presença quando a distância medida for menor que:
-
-```cpp
-const int LIMITE = 15;
-```
-
-Isso significa:
-- pet próximo do recipiente
-- evento registrado
-- contador incrementado
-- horário armazenado
-
----
-
-# 📅 Sistema de Histórico Diário
-
-O sistema possui controle automático de datas utilizando sincronização NTP.
-
-Quando um novo dia começa:
-- os contadores diários são reiniciados
-- novos registros passam a pertencer ao novo dia
-- o histórico anterior permanece salvo
-
-Isso permite:
-- acompanhamento por datas
-- análises futuras
-- dashboards históricos
-- comparação de comportamento
-
----
-
-# 🤖 Assistente Virtual CLYVO VET — Generative AI
-
-Além do sistema IoT, o projeto conta com um **assistente virtual baseado em Inteligência Artificial Generativa**, desenvolvido para interpretar perguntas do tutor e consultar os dados reais coletados pelo ESP32.
-
-O assistente funciona como uma camada de interação entre o tutor e a API do CLYVO VET, permitindo consultar informações de alimentação e hidratação utilizando linguagem natural.
-
-## 🎯 Objetivo do Assistente
-
-O objetivo é facilitar o acesso aos dados do monitoramento sem exigir que o tutor consulte diretamente os endpoints da API.
-
-Por exemplo, em vez de acessar manualmente `/comida`, o tutor pode perguntar:
+O arquivo:
 
 ```text
-"Quantas vezes meu pet comeu hoje?"
+IA/api.py
 ```
 
-O assistente interpreta a solicitação, utiliza a ferramenta correspondente, consulta os dados do IoT e apresenta a informação de forma clara.
+cria a API responsável por receber as mensagens do frontend.
 
----
-
-## 🧠 Escopo do Agente
-
-O assistente foi projetado para permanecer dentro do escopo do projeto.
-
-### Consultas permitidas
-
-- quantidade de visitas à comida
-- horários das visitas à comida
-- quantidade de visitas à água
-- horários das visitas à água
-- primeiro evento registrado
-- último evento registrado
-- resumo diário
-- consulta do histórico
-- consultas relacionadas a datas específicas
-
-### Fora do escopo
-
-O agente não deve:
-
-- responder perguntas aleatórias sem relação com o CLYVO VET
-- auxiliar em programação ou desenvolvimento de código
-- gerar imagens
-- responder assuntos não relacionados ao monitoramento
-- inventar dados que não foram retornados pelo IoT
-- realizar diagnósticos médicos
-
-A Inteligência Artificial atua como **assistente de interpretação dos dados**, não como substituta de um profissional veterinário.
-
----
-
-## 🔧 Tools do Assistente
-
-Para conectar a IA aos dados do CLYVO VET, foram definidas ferramentas específicas:
+A aplicação é criada com:
 
 ```python
-tools_list = [
-    consultar_status,
-    consultar_comida,
-    consultar_agua,
-    consultar_historico
-]
-```
-
-### `consultar_status()`
-
-Consulta o resumo do dia atual:
-
-```json
-{
-  "data": "13/03/2026",
-  "visitasComida": 4,
-  "visitasAgua": 2
-}
-```
-
-### `consultar_comida(data)`
-
-Consulta os registros relacionados à alimentação:
-
-```json
-{
-  "data": "13/03/2026",
-  "visitasComida": 4,
-  "visitaHorario": [
-    "08:15:32",
-    "12:04:18",
-    "15:37:41",
-    "19:10:05"
-  ]
-}
-```
-
-### `consultar_agua(data)`
-
-Consulta os registros relacionados à hidratação:
-
-```json
-{
-  "data": "13/03/2026",
-  "visitasAgua": 2,
-  "visitaHorario": [
-    "09:42:10",
-    "16:25:33"
-  ]
-}
-```
-
-### `consultar_historico()`
-
-Consulta os registros armazenados de diferentes dias:
-
-```json
-{
-  "12/03/2026": {
-    "visitasComida": 4,
-    "visitasAgua": 2
-  },
-  "13/03/2026": {
-    "visitasComida": 7,
-    "visitasAgua": 5
-  }
-}
-```
-
----
-
-## 🔄 Fluxo da Inteligência Artificial
-
-O funcionamento do assistente segue o fluxo:
-
-```text
-Tutor
-  │
-  ▼
-Pergunta em linguagem natural
-  │
-  ▼
-Assistente CLYVO VET
-  │
-  ▼
-Interpretação da intenção
-  │
-  ├── Alimentação ──────► consultar_comida()
-  │
-  ├── Hidratação ───────► consultar_agua()
-  │
-  ├── Status ────────────► consultar_status()
-  │
-  └── Histórico ─────────► consultar_historico()
-                              │
-                              ▼
-                         API / IoT
-                              │
-                              ▼
-                            JSON
-                              │
-                              ▼
-                    Assistente CLYVO VET
-                              │
-                              ▼
-                       Resposta ao tutor
-```
-
-Dessa forma, a IA não precisa armazenar ou inventar os eventos. Ela utiliza os dados fornecidos pelo sistema IoT para construir a resposta.
-
----
-
-## 📋 Saída Estruturada com Pydantic
-
-O projeto também utiliza **Pydantic** para transformar a consulta realizada pelo assistente em uma estrutura de dados validada.
-
-A estrutura `FichaMonitoramento` representa uma consulta ao sistema:
-
-```python
-from typing import Literal, Optional
-from pydantic import BaseModel
-
-
-class FichaMonitoramento(BaseModel):
-
-    nome_pet: str
-
-    tipo_consulta: Literal[
-        "status",
-        "comida",
-        "agua",
-        "historico"
-    ]
-
-    data: Optional[str] = None
-
-    informacao_solicitada: Literal[
-        "quantidade",
-        "horarios",
-        "ultimo_evento",
-        "primeiro_evento",
-        "resumo"
-    ]
-
-    visitas_comida: Optional[int] = None
-
-    visitas_agua: Optional[int] = None
-
-    horarios_comida: Optional[list[str]] = None
-
-    horarios_agua: Optional[list[str]] = None
-
-    resposta: str
-```
-
-### Exemplo de consulta
-
-Pergunta do tutor:
-
-```text
-"Quantas vezes o Thor comeu hoje?"
-```
-
-Dados estruturados:
-
-```json
-{
-  "nome_pet": "Thor",
-  "tipo_consulta": "comida",
-  "data": "13/03/2026",
-  "informacao_solicitada": "quantidade",
-  "visitas_comida": 4,
-  "visitas_agua": null,
-  "horarios_comida": null,
-  "horarios_agua": null,
-  "resposta": "Hoje o Thor foi até o comedouro 4 vezes."
-}
-```
-
-A estrutura permite validar os dados recebidos e manter uma saída padronizada para futuras integrações com o sistema.
-
----
-
-## 💬 Interação com o Assistente
-
-O sistema possui um chat em terminal para interação com o CLYVO VET.
-
-Exemplo:
-
-```text
---- Assistente CLYVO VET iniciado ---
-Você: Quantas vezes meu pet comeu hoje?
-
-CLYVO VET: Hoje foram registradas 4 visitas à comida.
-
-Você: Que horas ele bebeu água?
-
-CLYVO VET: Hoje foram registradas 2 visitas à água,
-às 09:42:10 e 16:25:33.
-```
-
-O chat utiliza o modelo configurado e disponibiliza as ferramentas do sistema através de:
-
-```python
-chat = client.chats.create(
-    model=MODEL_NAME,
-    config={
-        "system_instruction": SYSTEM_PROMPT,
-        "tools": tools_list
-    }
+app = FastAPI(
+    title="CLYVO VET API",
+    description="API de inteligência artificial do CLYVO VET",
+    version="1.0.0"
 )
 ```
 
 ---
 
-## 🛡️ Confiabilidade dos Dados
+# 💬 Endpoint `/chat`
 
-Um dos princípios do assistente é utilizar somente informações disponíveis no sistema.
+A API possui o endpoint:
 
 ```text
-Dado não disponível
-       ↓
-Não inventar
-       ↓
-Informar que não há dados suficientes
+POST /chat
 ```
 
-Isso evita que a IA apresente como fato uma informação que não foi registrada pelos sensores ou retornada pela API.
+### Request
+
+```json
+{
+  "message": "Quantas vezes meu pet comeu hoje?"
+}
+```
+
+### Response
+
+```json
+{
+  "response": "Hoje foram registradas 5 visitas à comida."
+}
+```
 
 ---
 
-## 🚀 Arquitetura Atualizada
+# 🧠 Funcionamento do Agente
 
-Com a inclusão da Generative AI, a arquitetura do CLYVO VET passa a integrar:
+O fluxo de uma pergunta é:
 
 ```text
-┌───────────────┐
-│      Pet      │
-└───────┬───────┘
-        │
-        ▼
-┌───────────────────┐
-│ Sensores HC-SR04  │
-└─────────┬─────────┘
-          │
-          ▼
-┌───────────────────┐
-│       ESP32       │
-│ Monitoramento IoT │
-└─────────┬─────────┘
-          │
-          ▼
-┌───────────────────┐
-│    API REST       │
-│       JSON        │
-└─────────┬─────────┘
-          │
-          ├──────────────► Dashboard Web
-          │
-          ▼
-┌───────────────────┐
-│   CLYVO VET AI    │
-│ Generative AI     │
-└─────────┬─────────┘
-          │
-          ▼
-┌───────────────────┐
-│   Tutor / Usuário │
-└───────────────────┘
+Usuário
+   │
+   ▼
+React
+   │
+   ▼
+POST /chat
+   │
+   ▼
+FastAPI
+   │
+   ▼
+Gemini
+   │
+   ▼
+Interpretação da pergunta
+   │
+   ▼
+Tool apropriada
+   │
+   ▼
+ESP32
+   │
+   ▼
+JSON
+   │
+   ▼
+Gemini
+   │
+   ▼
+Resposta
+   │
+   ▼
+React
 ```
-
-A integração representa a evolução do projeto de um sistema de monitoramento IoT para uma solução que combina **IoT + API + Generative AI + dados estruturados**, mantendo o foco no acompanhamento da alimentação e hidratação dos pets.
 
 ---
 
-# 🚀 Como Rodar o Projeto
+# 🛠️ Tools
 
-Esta seção apresenta o passo a passo para executar o **CLYVO VET** localmente, incluindo a simulação do ESP32 no Wokwi e o Assistente Virtual baseado em Generative AI.
+As ferramentas responsáveis por consultar os dados IoT estão em:
 
-## 📋 Pré-requisitos
+```text
+IA/tools.py
+```
 
-Antes de iniciar, instale:
+O sistema possui quatro ferramentas principais.
 
-- Visual Studio Code
-- Python
-- Git
-- Extensão **Wokwi** para o Visual Studio Code
-- Uma **API Key do Google Gemini**
+## `consultar_status()`
 
-> O Python é necessário para executar o Assistente Virtual CLYVO VET.
+Consulta:
 
-## 1. 📥 Baixar o Projeto
+```text
+GET /status
+```
 
-Clone o repositório:
+Retorna o resumo atual.
+
+---
+
+## `consultar_comida()`
+
+Consulta:
+
+```text
+GET /comida
+```
+
+Retorna:
+
+- quantidade de visitas;
+- horários;
+- data.
+
+---
+
+## `consultar_agua()`
+
+Consulta:
+
+```text
+GET /agua
+```
+
+Retorna:
+
+- quantidade de visitas;
+- horários;
+- data.
+
+---
+
+## `consultar_historico()`
+
+Consulta:
+
+```text
+GET /historico
+```
+
+Retorna os dados históricos organizados por data.
+
+---
+
+# 🧩 Pydantic
+
+O projeto utiliza Pydantic para estruturar e validar informações do monitoramento.
+
+A classe principal está localizada em:
+
+```text
+IA/schemas.py
+```
+
+A estrutura `FichaMonitoramento` representa uma consulta realizada pelo assistente.
+
+Ela possui informações como:
+
+```text
+nome_pet
+tipo_consulta
+data
+informacao_solicitada
+visitas_comida
+visitas_agua
+horarios_comida
+horarios_agua
+resposta
+```
+
+Isso permite manter os dados retornados pelo modelo em um formato estruturado.
+
+---
+
+# 🛡️ Regras da Inteligência Artificial
+
+O comportamento do assistente é definido em:
+
+```text
+IA/SYSTEM_PROMPT.py
+```
+
+O sistema possui regras para:
+
+- não inventar dados;
+- consultar o IoT quando necessário;
+- responder utilizando dados reais;
+- realizar comparações apenas quando houver dados;
+- manter o contexto do CLYVO VET;
+- evitar diagnósticos veterinários;
+- orientar a procura de um profissional quando necessário.
+
+---
+
+# 🚫 Não Invenção de Dados
+
+O assistente não deve criar:
+
+- números;
+- horários;
+- datas;
+- registros;
+- informações sobre o pet que não estejam disponíveis.
+
+Por exemplo:
+
+```text
+Usuário:
+Quantas vezes meu pet comeu hoje?
+
+IoT:
+visitasComida = 5
+
+Assistente:
+Hoje foram registradas 5 visitas à comida.
+```
+
+Caso os dados não estejam disponíveis, o assistente deve informar isso ao usuário.
+
+---
+
+# 🩺 Limitação Veterinária
+
+O CLYVO VET não substitui um médico veterinário.
+
+Os sensores registram apenas interações com os recipientes.
+
+Portanto, os dados não são suficientes para determinar:
+
+- doenças;
+- desidratação;
+- condições clínicas;
+- diagnósticos;
+- necessidade de medicamentos.
+
+Em situações relacionadas à saúde do animal, o usuário deve procurar um médico veterinário.
+
+---
+
+# 💻 Frontend de Teste
+
+O frontend está localizado em:
+
+```text
+frontend_test/
+```
+
+A aplicação foi desenvolvida utilizando:
+
+- React
+- Vite
+- JavaScript
+- Lucide React
+- CSS
+
+---
+
+# 🖥️ Interface
+
+O frontend possui uma interface de chat para conversar com o Assistente CLYVO VET.
+
+A aplicação utiliza:
+
+```javascript
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  'http://localhost:8000';
+```
+
+Portanto, por padrão, o frontend espera que a API FastAPI esteja disponível em:
+
+```text
+http://localhost:8000
+```
+
+---
+
+# 🔄 Comunicação Frontend → FastAPI
+
+Quando o usuário envia uma pergunta, o React realiza:
+
+```http
+POST http://localhost:8000/chat
+```
+
+com:
+
+```json
+{
+  "message": "Quantas vezes meu pet comeu hoje?"
+}
+```
+
+A resposta recebida:
+
+```json
+{
+  "response": "Hoje foram registradas 5 visitas à comida."
+}
+```
+
+é então apresentada na interface.
+
+---
+
+# 🌐 CORS
+
+A API FastAPI possui configuração de CORS para permitir que o frontend React realize requisições.
+
+Atualmente:
+
+```python
+allow_origins=["*"]
+```
+
+Isso facilita os testes locais entre frontend e backend.
+
+Para um ambiente de produção, recomenda-se restringir as origens autorizadas.
+
+---
+
+# 🔐 Configuração da API Key
+
+A configuração do Gemini está em:
+
+```text
+IA/config.py
+```
+
+O projeto utiliza:
+
+```python
+API_KEY = ""
+```
+
+A chave deve ser configurada antes de executar o backend.
+
+> ⚠️ Nunca publique uma API Key válida no GitHub.
+
+Uma configuração mais segura para produção é utilizar uma variável de ambiente.
+
+---
+
+# ⚙️ Como Executar
+
+## 1. Clonar o projeto
 
 ```bash
 git clone https://github.com/ZeDio/Challenger_IOT.git
@@ -793,155 +913,477 @@ Entre na pasta:
 cd Challenger_IOT
 ```
 
-Ou faça o download do projeto pelo GitHub e extraia os arquivos.
+---
 
-## 2. 💻 Abrir no Visual Studio Code
+# 2. Executar o IoT
 
-Abra o **Visual Studio Code** e selecione **File → Open Folder**. Escolha a pasta `Challenger_IOT`.
+Abra o projeto no Wokwi ou execute a simulação localmente.
 
-## 3. 🔌 Rodar o Wokwi Localmente
+Os principais arquivos são:
 
-Instale a extensão do **Wokwi** no VS Code. Com o projeto aberto, localize os arquivos da simulação, como `diagram.json` e `sketch.ino`, e inicie a simulação pelo recurso do Wokwi disponível no VS Code.
-
-O ESP32 será executado com os sensores HC-SR04, LCD I2C, botões, Wi-Fi simulado e API REST. O Serial Monitor pode ser usado para acompanhar os eventos.
-
-> **Importante:** mantenha o ESP32/Wokwi em execução para testar a integração com o assistente.
-
-## 4. 🐍 Preparar o Python
-
-No VS Code, abra **Terminal → New Terminal** e verifique a instalação:
-
-```bash
-python --version
+```text
+IOT/
+├── diagram.json
+├── wokwi.toml
+└── sketch/
+    └── sketch.ino
 ```
 
-No Windows, também pode ser usado:
+O projeto Wokwi também está disponível em:
 
-```bash
-py --version
+https://wokwi.com/projects/463362553076345857
+
+---
+
+# 3. Preparar o ambiente Python
+
+Entre na pasta da IA:
+
+```powershell
+cd IA
 ```
 
-## 5. 📦 Instalar as Dependências
+Recomenda-se criar um ambiente virtual:
 
-Execute exatamente o comando abaixo no terminal:
-
-```bash
-pip install -q -U "google-genai>=2.3.0" "pydantic>=2.0"
+```powershell
+py -m venv .venv
 ```
 
-Essas bibliotecas são utilizadas para a integração com a Generative AI e para a validação das respostas estruturadas com Pydantic.
+Ative o ambiente:
 
-## 6. 🔑 Configurar a API Key
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
 
-No arquivo config.py do Assistente Virtual, localize:
+Caso o PowerShell bloqueie a ativação do ambiente virtual, você pode executar os comandos usando diretamente:
+
+```powershell
+py -m pip
+```
+
+sem precisar ativá-lo.
+
+---
+
+# 4. Instalar as dependências
+
+Com o ambiente virtual ativo:
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+Ou utilizando o Python Launcher:
+
+```powershell
+py -m pip install -r requirements.txt
+```
+
+---
+
+# 5. Configurar a API Key
+
+Abra:
+
+```text
+IA/config.py
+```
+
+Configure sua chave do Google Gemini.
+
+Exemplo:
 
 ```python
-api_key = ""
+API_KEY = "SUA_API_KEY"
 ```
 
-Informe sua chave da API do Google Gemini:
+---
 
-```python
-api_key = "SUA_API_KEY"
+# 6. Iniciar a API FastAPI
+
+Ainda dentro da pasta `IA`, execute:
+
+```powershell
+py -m uvicorn api:app --reload
 ```
 
-> **Atenção:** não publique sua API Key no GitHub.
+A API estará disponível em:
 
-## 7. 🤖 Executar o Assistente
-
-Com o Wokwi em execução, abra outro terminal no VS Code e execute o arquivo Python do assistente:
-
-```bash
-python main.py
+```text
+http://localhost:8000
 ```
 
-No Windows, também pode usar:
+---
 
-```bash
+# 7. Documentação da API
+
+O FastAPI gera automaticamente a documentação interativa.
+
+Acesse:
+
+```text
+http://localhost:8000/docs
+```
+
+Também é possível acessar a documentação alternativa:
+
+```text
+http://localhost:8000/redoc
+```
+
+---
+
+# 8. Executar o Frontend
+
+Abra outro terminal.
+
+Entre na pasta:
+
+```powershell
+cd frontend_test
+```
+
+Instale as dependências:
+
+```powershell
+npm install
+```
+
+Execute:
+
+```powershell
+npm run dev
+```
+
+O Vite fornecerá o endereço local da aplicação, normalmente:
+
+```text
+http://localhost:5173
+```
+
+---
+
+# 9. Executar o Assistente pelo Terminal
+
+Além da API utilizada pelo React, existe uma versão de interação diretamente pelo terminal.
+
+Dentro da pasta `IA`:
+
+```powershell
 py main.py
 ```
 
-O terminal deverá iniciar o chat:
+O sistema exibirá:
 
 ```text
 --- Assistente CLYVO VET iniciado ---
 ```
 
-Depois, faça perguntas relacionadas ao monitoramento:
-
-```text
-Você: Quantas vezes meu pet comeu hoje?
-
-CLYVO VET: Hoje foram registradas 4 visitas à comida.
-```
+O usuário pode então realizar perguntas diretamente pelo terminal.
 
 Para encerrar:
 
 ```text
-Você: sair
+sair
 ```
 
-## 🔄 8. Fluxo Completo
+Também são aceitos:
 
 ```text
-Baixar projeto
-      ↓
-Abrir no VS Code
-      ↓
-Iniciar Wokwi localmente
-      ↓
-ESP32 executa o monitoramento
-      ↓
-API REST disponibiliza os dados
-      ↓
-Instalar dependências Python
-      ↓
-Configurar API Key
-      ↓
-Executar o arquivo .py
-      ↓
-Assistente CLYVO VET
-      ↓
-Tutor faz uma pergunta
-      ↓
-IA utiliza as Tools
-      ↓
-Dados do IoT retornam em JSON
-      ↓
-IA interpreta os dados
-      ↓
-Resposta ao tutor
+encerrar
+parar
 ```
 
-## ⚠️ Observações
+---
 
-- O Wokwi deve estar executando para testar os dados do ESP32.
-- O Python deve estar instalado para executar o assistente.
-- A `google-genai` é usada na integração com a Generative AI.
-- O Pydantic valida a saída estruturada.
-- A API Key deve ser configurada antes da execução.
-- Não publique sua API Key no GitHub.
-- O assistente deve permanecer dentro do escopo definido para o CLYVO VET.
-- O assistente não deve inventar dados que não estejam disponíveis no IoT/API.
+# 🔄 Execução Completa
 
+Para executar o projeto completo:
+
+### Terminal 1 — IoT
+
+Inicie a simulação do ESP32 no Wokwi.
+
+### Terminal 2 — FastAPI
+
+```powershell
+cd IA
+py -m uvicorn api:app --reload
+```
+
+### Terminal 3 — React
+
+```powershell
+cd frontend_test
+npm install
+npm run dev
+```
+
+Depois abra o endereço fornecido pelo Vite.
 
 ---
 
-# 🧪 Simulação no Wokwi
+# 🧪 Exemplos de Perguntas
 
-🔗 https://wokwi.com/projects/463362553076345857
+Após iniciar o sistema, o usuário pode perguntar:
+
+### Alimentação
+
+```text
+Quantas vezes meu pet comeu hoje?
+```
+
+```text
+Que horas ele comeu?
+```
+
+```text
+Qual foi a primeira refeição?
+```
+
+```text
+Qual foi a última vez que ele comeu?
+```
+
+### Hidratação
+
+```text
+Quantas vezes meu pet bebeu água hoje?
+```
+
+```text
+Que horas ele bebeu água?
+```
+
+```text
+Qual foi o último horário que ele bebeu água?
+```
+
+### Histórico
+
+```text
+Como foi o dia de ontem?
+```
+
+```text
+Qual dia teve mais refeições?
+```
+
+```text
+Ele bebeu mais água ontem ou hoje?
+```
 
 ---
 
-# 🧪 Simulação no Colab
+# 📊 Exemplo de Fluxo
 
-🔗 https://colab.research.google.com/drive/1uQOtW1o4nlOGtkVi7hAWlylnQ0dQWuv4
+Pergunta:
+
+```text
+Ele comeu mais ontem ou hoje?
+```
+
+A IA consulta o histórico:
+
+```json
+{
+  "12/03/2026": {
+    "visitasComida": 5,
+    "visitasAgua": 3
+  },
+  "13/03/2026": {
+    "visitasComida": 7,
+    "visitasAgua": 5
+  }
+}
+```
+
+E pode responder:
+
+```text
+Hoje foram registradas 7 visitas à comida,
+enquanto ontem foram 5. Portanto, hoje foram
+registradas 2 visitas a mais.
+```
 
 ---
 
-# 💻 Repositório GitHub
+# 🖼️ Preview
 
-🔗 https://github.com/ZeDio/Challenger_IOT
+![Projeto CLYVO VET](./Projeto_IOT.png)
+
+---
+
+# 🎥 Demonstração
+
+Vídeo demonstrativo:
+
+https://youtu.be/ngr6tGGZNsc
+
+---
+
+# 🔗 Links
+
+## GitHub
+
+https://github.com/ZeDio/Challenger_IOT
+
+## Wokwi
+
+https://wokwi.com/projects/463362553076345857
+
+## Google Colab
+
+https://colab.research.google.com/drive/1uQOtW1o4nlOGtkVi7hAWlylnQ0dQWuv4
+
+---
+
+# 📚 Tecnologias
+
+| Tecnologia | Utilização |
+|---|---|
+| ESP32 | Microcontrolador |
+| HC-SR04 | Detecção de aproximação |
+| LCD I2C | Exibição dos dados |
+| Arduino C++ | Programação do IoT |
+| Wokwi | Simulação do hardware |
+| Wi-Fi | Comunicação |
+| NTP | Sincronização de horário |
+| REST API | Comunicação dos dados |
+| JSON | Estrutura dos dados |
+| Python | Backend da IA |
+| FastAPI | API do Assistente |
+| Uvicorn | Servidor ASGI |
+| Pydantic | Validação e estruturação |
+| Google Gemini | Inteligência Artificial Generativa |
+| React | Frontend |
+| Vite | Build e desenvolvimento frontend |
+| Lucide React | Ícones da interface |
+
+---
+
+# 📁 Organização por Camada
+
+## `IOT/`
+
+Responsável pelo hardware e coleta dos dados.
+
+```text
+IOT/
+├── diagram.json
+├── libraries.txt
+├── wokwi-project.txt
+├── wokwi.toml
+└── sketch/
+    └── sketch.ino
+```
+
+---
+
+## `IA/`
+
+Responsável pela Inteligência Artificial e API.
+
+```text
+IA/
+├── api.py
+├── config.py
+├── main.py
+├── requirements.txt
+├── schemas.py
+├── SYSTEM_PROMPT.py
+└── tools.py
+```
+
+### Responsabilidades
+
+| Arquivo | Responsabilidade |
+|---|---|
+| `api.py` | API FastAPI |
+| `config.py` | Configurações do Gemini e IoT |
+| `main.py` | Chat via terminal |
+| `schemas.py` | Modelos Pydantic |
+| `SYSTEM_PROMPT.py` | Regras do assistente |
+| `tools.py` | Consulta aos endpoints IoT |
+| `requirements.txt` | Dependências Python |
+
+---
+
+## `frontend_test/`
+
+Responsável pela interface web.
+
+```text
+frontend_test/
+├── index.html
+├── package.json
+├── package-lock.json
+└── src/
+    ├── main.jsx
+    └── styles.css
+```
+
+---
+
+# 🔒 `.gitignore`
+
+O projeto possui um `.gitignore` configurado para ignorar somente:
+
+```text
+__pycache__/
+node_modules/
+```
+
+Esses diretórios são gerados automaticamente pelas ferramentas Python e Node.js e não precisam ser versionados.
+
+---
+
+# ⚠️ Segurança
+
+Nunca envie para o GitHub:
+
+- API Keys;
+- senhas;
+- tokens;
+- credenciais;
+- arquivos `.env` contendo informações privadas.
+
+A API Key do Gemini utilizada em `IA/config.py` deve ser mantida privada.
+
+---
+
+# 🐾 Sobre o CLYVO VET
+
+O CLYVO VET busca aproximar **tecnologia e cuidado animal**, utilizando dados da rotina do pet para tornar seu acompanhamento mais acessível.
+
+A combinação de IoT e Inteligência Artificial permite que informações coletadas automaticamente sejam transformadas em respostas simples para o tutor.
+
+```text
+              CLYVO VET
+
+       🐾 Pet
+          │
+          ▼
+     📡 Sensores
+          │
+          ▼
+       ⚡ ESP32
+          │
+          ▼
+      📊 Dados
+          │
+          ▼
+      🔌 API REST
+          │
+          ▼
+       🤖 Gemini
+          │
+          ▼
+      💬 Assistente
+          │
+          ▼
+        👤 Tutor
+```
 
 ---
 
@@ -966,10 +1408,14 @@ Projeto desenvolvido por:
 
 ---
 
-# 📚 Projeto Acadêmico
+# 🎓 Projeto Acadêmico
 
 Projeto desenvolvido para a disciplina:
 
-**Disruptive Architectures: IoT, IoB & Generative AI**
+**DISRUPTIVE ARCHITECTURES: IoT, IoB & Generative AI**
 
 ---
+
+## 🐾 CLYVO VET
+
+**IoT + Generative AI + Dados para o cuidado inteligente dos pets.**

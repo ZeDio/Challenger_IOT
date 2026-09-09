@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import time
 from config import client, MODEL_NAME
 from SYSTEM_PROMPT import SYSTEM_PROMPT

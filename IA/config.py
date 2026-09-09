@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from google import genai
 
 # Chave de API (substitua pela sua ou use variáveis de ambiente)
