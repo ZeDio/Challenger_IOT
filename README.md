@@ -1214,11 +1214,15 @@ registradas 2 visitas a mais.
 
 ---
 
-# 🎥 Demonstração
+# 🎥 Demonstrações
 
-Vídeo demonstrativo:
+Vídeos demonstrativos:
 
+Sprint 1 e 2:
 https://youtu.be/ngr6tGGZNsc
+
+Sprint 3:
+https://youtu.be/_r_kbnhGVq0
 
 ---
 
