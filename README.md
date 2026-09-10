@@ -176,6 +176,10 @@ A arquitetura atual é dividida em três partes principais:
 └──────────────────────────────┘
 ```
 
+Ou:
+
+![Projeto CLYVO VET](./AF.png)
+
 ---
 
 # 📂 Estrutura do Projeto
