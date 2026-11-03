@@ -25,6 +25,11 @@ trabalhar com os dados mantidos pelo backend Java do PetCenter. Essa
 integração substitui, no fluxo atual do assistente, as consultas diretas
 aos endpoints IoT por chamadas HTTP à API REST Java.
 
+O front-end do PetCenter está em um repositório separado, desenvolvido
+por ArthurCPV. Ele se comunica com a API Java, enquanto a API de IA do
+CLYVO VET, desenvolvida neste projeto, fica responsável pelo assistente
+inteligente e pela integração com os dados do PetCenter.
+
 **Repositório do backend Java:**\
 https://github.com/Marixavq/challenge-java-petcenter/tree/sprint-final
 
@@ -1520,13 +1525,30 @@ Sprint 1 e 2: https://youtu.be/ngr6tGGZNsc
 
 Sprint 3: https://youtu.be/\_r_kbnhGVq0
 
+Sprint 4: https://youtu.be/Z4YKXAoPKlU
+
 ------------------------------------------------------------------------
 
 # 🔗 Links
 
 ## GitHub
 
+Repositório principal do CLYVO VET (integração de IA):\
 https://github.com/ZeDio/Challenger_IOT
+
+Front-end PetCenter (desenvolvido por ArthurCPV):\
+https://github.com/ArthurCPV/PetCenter
+
+## APIs publicadas
+
+API de Inteligência Artificial do CLYVO VET (Render):\
+https://challenger-iot.onrender.com
+
+API Java do PetCenter (Render):\
+https://challenge-java-petcenter.onrender.com
+
+Documentação Swagger da API Java:\
+https://challenge-java-petcenter.onrender.com/swagger-ui/index.html
 
 ## API Java PetCenter
 
